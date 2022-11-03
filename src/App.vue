@@ -1,15 +1,15 @@
 <template>
-  <!-- unplugin-vue-components auto import -->
-  <v-app>
-    <Header />
-    <v-main>
-      <Form />
-    </v-main>
-  </v-app>
+  <v-btn @click="toggle">{{ myBool }}</v-btn>
+  <div v-show="myBool">= TRUE</div>
+  <div v-show="!myBool">= FALSE</div>
 </template>
 
-<style scoped>
-.v-main {
-  padding: 1rem 0;
-}
-</style>
+<script setup lang="ts">
+let myBool = false;
+const toggle = () => {
+  console.log('toggle');
+  console.log('myBool before', myBool);
+  myBool = !myBool;
+  console.log('myBool after', myBool);
+};
+</script>

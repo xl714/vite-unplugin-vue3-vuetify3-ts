@@ -9,13 +9,15 @@
     <i-logos-vuetifyjs />
     <i-park-plus-cross />
     <i-mdi:lightning-bolt />
+    <i-park-plus-cross />
+    <i-mdi:account />
   </header>
 </template>
 
 <style lang="scss" scoped>
 header {
   display: grid;
-  grid-template-columns: repeat(9, min-content);
+  grid-template-columns: repeat(11, min-content);
   grid-column-gap: 0.5rem;
   justify-content: center;
   svg {

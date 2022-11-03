@@ -5,13 +5,9 @@
 declare module 'vue' {
   export interface GlobalComponents {
     Form: typeof import('./components/Form.vue')['default']
+    FormProfile: typeof import('./components/FormProfile.vue')['default']
     Header: typeof import('./components/Header.vue')['default']
-    ILogosTypescriptIcon: typeof import('~icons/logos/typescript-icon')['default']
-    ILogosVitejs: typeof import('~icons/logos/vitejs')['default']
-    ILogosVue: typeof import('~icons/logos/vue')['default']
-    ILogosVuetifyjs: typeof import('~icons/logos/vuetifyjs')['default']
-    'IMdi:lightningBolt': typeof import('~icons/mdi/lightning-bolt')['default']
-    IParkPlusCross: typeof import('~icons/icon-park/plus-cross')['default']
+    Profile: typeof import('./components/Profile.vue')['default']
   }
 }
 
