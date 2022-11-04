@@ -1,8 +1,8 @@
 <script setup lang="ts">
 // unplugin-auto-import will declare it on src/auto-imports.d.ts
-const name = ref('');
-const currentWeight = ref('');
-const targetWeight = ref('');
+const name = ref('Xavier');
+const currentWeight = ref('88');
+const targetWeight = ref('70');
 
 const disabled = computed(() => {
   return !(
@@ -11,9 +11,23 @@ const disabled = computed(() => {
     targetWeight.value.trim().length > 0
   );
 });
-const sayHi = () => {
-  name.value && alert(`Hi ${name.value}`);
+
+// const emit = defineEmits(['saveProfile']);
+// const emits = ['saveProfile'];
+//const emit = defineEmits<{(e: saveProfile, name: string): void}>();
+//console.log('emit', emit);
+
+const emits = defineEmits<{ (e: 'onEmitSaveProfile', name: string): void }>();
+
+const emitSaveProfile = () => {
+  //name.value && alert(`Hi ${name.value}`);
+  console.log('before emit');
+  emits('onEmitSaveProfile', name, currentWeight, targetWeight);
+  console.log('after emit');
 };
+
+// https://stackblitz.com/edit/vite-kmhcnp?file=src%2FApp.vue
+// 
 </script>
 
 <template>
@@ -21,7 +35,7 @@ const sayHi = () => {
     <header>
       <h2>Profile</h2>
     </header>
-    <form @submit.prevent="sayHi">
+    <form @submit.prevent="emitSaveProfile">
       <v-text-field
         autofocus
         label="What's your name?"

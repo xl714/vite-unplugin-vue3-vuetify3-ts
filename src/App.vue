@@ -1,4 +1,12 @@
 <script setup lang="ts">
+/*
+The current recommended approach is:
+ - Use SFC + <script setup> + Composition API
+ - Use VSCode + Volar (or WebStorm once its support for <script setup> ships soon)
+ - Not strictly required for TS, but if applicable, use Vite for build tooling.
+TODO: 
+ - saveProfile cf https://v2.vuejs.org/v2/cookbook/client-side-storage.html
+*/
 // unplugin-auto-import will declare it on src/auto-imports.d.ts
 const name = ref('');
 const disabled = computed(() => {
@@ -31,13 +39,17 @@ const loadProfiles = onMounted(() => {
     console.log('showFormProfile.value', showFormProfile.value);
   }
 });
+
+const saveProfile = (name, currentWeight, targetWeight) => {
+  console.log('saveProfile', name);
+};
 </script>
 
 <template>
   <v-app>
     <Header />
     <v-main>
-      <FormProfile v-if="showFormProfile" />
+      <FormProfile v-if="showFormProfile" @onEmitSaveProfile="saveProfile" />
       <Profile v-if="showProfile" />
     </v-main>
   </v-app>
