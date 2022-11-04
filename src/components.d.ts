@@ -7,6 +7,8 @@ declare module 'vue' {
     Form: typeof import('./components/Form.vue')['default']
     FormProfile: typeof import('./components/FormProfile.vue')['default']
     Header: typeof import('./components/Header.vue')['default']
+    'IMdi:account': typeof import('~icons/mdi/account')['default']
+    IParkPlusCross: typeof import('~icons/icon-park/plus-cross')['default']
     Profile: typeof import('./components/Profile.vue')['default']
   }
 }

@@ -1,14 +1,5 @@
 <template>
   <header>
-    <i-logos-vitejs />
-    <i-park-plus-cross />
-    <i-logos-typescript-icon />
-    <i-park-plus-cross />
-    <i-logos-vue />
-    <i-park-plus-cross />
-    <i-logos-vuetifyjs />
-    <i-park-plus-cross />
-    <i-mdi:lightning-bolt />
     <i-park-plus-cross />
     <i-mdi:account />
   </header>
@@ -22,7 +13,7 @@ header {
   justify-content: center;
   svg {
     align-self: center;
-    &:nth-child(odd) {
+    &:nth-child(even) {
       font-size: 2em;
     }
     &:last-of-type {
