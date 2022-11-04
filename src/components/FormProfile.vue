@@ -17,7 +17,14 @@ const disabled = computed(() => {
 //const emit = defineEmits<{(e: saveProfile, name: string): void}>();
 //console.log('emit', emit);
 
-const emits = defineEmits<{ (e: 'onEmitSaveProfile', name: string): void }>();
+const emits = defineEmits<{
+  (
+    e: 'onEmitSaveProfile',
+    name: string,
+    currentWeight: number,
+    targetWeight: number
+  ): void;
+}>();
 
 const emitSaveProfile = () => {
   //name.value && alert(`Hi ${name.value}`);
@@ -27,7 +34,7 @@ const emitSaveProfile = () => {
 };
 
 // https://stackblitz.com/edit/vite-kmhcnp?file=src%2FApp.vue
-// 
+//
 </script>
 
 <template>
@@ -46,12 +53,14 @@ const emitSaveProfile = () => {
         label="What's your current weight in kilogrammes ?"
         v-model="currentWeight"
         append-icon="IMdiAccount"
+        type="number"
       ></v-text-field>
 
       <v-text-field
         label="What's your target weight in kilogrammes ?"
         v-model="targetWeight"
         append-icon="mdiWeightKilogram"
+        type="number"
       ></v-text-field>
 
       <v-btn

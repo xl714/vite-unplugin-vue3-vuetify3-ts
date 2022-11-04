@@ -41,7 +41,7 @@ const loadProfiles = onMounted(() => {
 });
 
 const saveProfile = (name, currentWeight, targetWeight) => {
-  console.log('saveProfile', name);
+  console.log('saveProfile', name, currentWeight, targetWeight);
 };
 </script>
 
