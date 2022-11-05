@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emits = defineEmits<{
+  (e: 'onEmitSelectProfile', id: number): void;
   (e: 'onEmitOpenNewFormProfile'): void;
 }>();
 
@@ -19,6 +20,13 @@ const emitOpenNewFormProfile = () => {
   console.log('Before onEmitOpenNewFormProfile');
   emits('onEmitOpenNewFormProfile');
   console.log('After onEmitOpenNewFormProfile');
+};
+
+const emitSelectProfile = (e) => {
+  let selectedId = e.currentTarget.getAttribute('data-id');
+  console.log('Before onEmitSelectProfile');
+  emits('onEmitSelectProfile', selectedId);
+  console.log('After onEmitSelectProfile');
 };
 </script>
 
@@ -32,8 +40,9 @@ const emitOpenNewFormProfile = () => {
           <v-card
             :data-id="id"
             v-if="showAddButton"
-            @click="emitOpenNewFormProfile"
+            @click="emitSelectProfile"
             block
+            :class="selectedProfileId == id ? `selected` : ``"
           >
             <i-mdi:account />
             <span class="profile">{{ item.name }}</span>

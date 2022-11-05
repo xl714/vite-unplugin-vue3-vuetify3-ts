@@ -94,6 +94,10 @@ const openNewFormProfile = () => {
   console.log('openNewFormProfile');
   showFormProfile.value = true;
 };
+const selectProfile = (id) => {
+  console.log('selectProfile', id);
+  selectedProfileId.value = id;
+};
 </script>
 
 <template>
@@ -101,6 +105,7 @@ const openNewFormProfile = () => {
     <div>selectedProfileId: {{ selectedProfileId }}</div>
     <Header
       :profiles="profiles"
+      @onEmitSelectProfile="selectProfile"
       @onEmitOpenNewFormProfile="openNewFormProfile"
       :showAddButton="!showFormProfile"
     />
