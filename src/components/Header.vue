@@ -26,7 +26,7 @@ const emitSelectProfile = (e) => {
   let selectedId = e.currentTarget.getAttribute('data-id');
   console.log('Before onEmitSelectProfile');
   emits('onEmitSelectProfile', selectedId);
-  props.selectedProfileId.value = selectedId;
+  props.selectedProfileId.value = parseInt(selectedId);
   console.log('After onEmitSelectProfile');
 };
 </script>

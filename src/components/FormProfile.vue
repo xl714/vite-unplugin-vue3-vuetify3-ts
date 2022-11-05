@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Profile } from '../classes/profile';
 // unplugin-auto-import will declare it on src/auto-imports.d.ts
 
 // https://vuejs.org/api/sfc-script-setup.html#typescript-only-features
@@ -8,17 +9,17 @@
 // }>();
 export interface Props {
   // profileId?: number | null;
-  profile?: object | null;
+  profile: Profile;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  profile: null,
+  profile: new Profile(),
 });
 console.log('props.profile', props.profile);
 
-const name = ref(props.profile ? props.profile.name : 'Xavier');
-const startWeight = ref(props.profile ? props.profile.startWeight : '88');
-const targetWeight = ref(props.profile ? props.profile.targetWeight : '70');
+const name = ref(props.profile.name);
+const startWeight = ref(props.profile.startWeight);
+const targetWeight = ref(props.profile.targetWeight);
 
 const disabled = computed(() => {
   return !(
@@ -62,7 +63,7 @@ const emitSaveProfile = () => {
       <v-col cols="6" class="text-left">
         <header>
           <h2>
-            {{ profile ?? `New ` }} Profile
+            {{ profile.id ? `` : `New ` }} Profile
             {{ profile ? `Id:${profile.id}` : `` }}
           </h2>
         </header></v-col

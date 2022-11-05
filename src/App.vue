@@ -73,11 +73,15 @@ const removeProfile = () => {
 
 const openNewFormProfile = () => {
   console.log('openNewFormProfile');
+  selectedProfileId.value = null;
   showFormProfile.value = true;
+  showProfile.value = false;
 };
-const selectProfile = (id) => {
+const selectProfile = (id: number) => {
   console.log('selectProfile', id);
-  selectedProfileId.value = id;
+  selectedProfileId.value = parseInt(id);
+  showFormProfile.value = false;
+  showProfile.value = true;
 };
 </script>
 
