@@ -39,34 +39,27 @@ const emitSelectProfile = (e) => {
       <v-row>
         <v-col cols="9" class="text-left">
           <v-row dense>
-            <v-col v-for="[id, item] in profiles" :key="id" cols="4">
+            <v-col v-for="[id, item] in profiles" :key="id" cols="3">
               <v-card
                 :data-id="item.id"
                 @click="emitSelectProfile"
                 :class="props.selectedProfileId == item.id ? `selected` : ``"
                 :outlined="props.selectedProfileId == item.id ? `outlined` : ``"
+                class="text-left"
               >
-                <div class="d-flex flex-no-wrap justify-space-between">
-                  <v-avatar class="ma-1" size="20">
-                    <i-mdi:account />
-                  </v-avatar>
-                  <div class="c__text">
-                    <v-card-title>
-                      {{ item.name }} ({{ props.selectedProfileId }} -
-                      {{ item.id }})
-                    </v-card-title>
-                    <v-card-subtitle>
-                      > {{ item.targetWeight }} kg
-                    </v-card-subtitle>
-                  </div>
-                </div>
+                <v-avatar class="m-1" size="20">
+                  <i-mdi:account />
+                </v-avatar>
+                <v-card-title>
+                  {{ item.name }}
+                </v-card-title>
               </v-card>
             </v-col>
           </v-row>
         </v-col>
         <v-col cols="3">
           <v-btn v-if="showAddButton" @click="emitOpenNewFormProfile" block>
-            <i-park-plus-cross /> Ajouter un profile
+            <i-park-plus-cross /> New profile
           </v-btn>
         </v-col>
       </v-row>
@@ -77,20 +70,21 @@ const emitSelectProfile = (e) => {
 <style lang="scss" scoped>
 header {
   .v-card {
-    cursor: ponter;
-  }
-  .selected {
-    border: 1px solid gold;
-  }
-  .c__text {
-    width: 200px;
-    display: inline-flex;
+    cursor: pointer;
+    .v-avatar {
+      display: inline-flex;
+    }
     .v-card-title {
+      display: inline-flex;
       font-size: 0.9em;
     }
     .v-card-subtitle {
+      display: inline-flex;
       font-size: 0.7em;
     }
+  }
+  .selected {
+    border: 1px solid gold;
   }
   svg {
     align-self: center;

@@ -50,7 +50,7 @@ const saveProfile = (id, name, currentWeight, targetWeight) => {
   let profile = new Profile(id, name, currentWeight, targetWeight);
   console.log('profile.id', profile.id);
   profiles.set(id, profile);
-  // saveProfiles();
+  saveProfiles();
   profiles.forEach(function (value, key) {
     console.log('profile item key', key, 'profile item value', value);
   });
@@ -61,7 +61,8 @@ const saveProfile = (id, name, currentWeight, targetWeight) => {
 
 const saveProfiles = () => {
   const parsed = JSON.stringify(profiles);
-  localStorage.setItem('profiles', parsed);
+  //localStorage.setItem('profiles', parsed);
+  console.log('saveProfiles', parsed);
 };
 
 const removeProfile = () => {
@@ -81,7 +82,6 @@ const selectProfile = (id) => {
 
 <template>
   <v-app>
-    <div>selectedProfileId: {{ selectedProfileId }}</div>
     <Header
       :profiles="profiles"
       :selectedProfileId="selectedProfileId"
