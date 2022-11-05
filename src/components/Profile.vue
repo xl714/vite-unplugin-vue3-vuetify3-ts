@@ -6,6 +6,7 @@ export interface Props {
 const props = withDefaults(defineProps<Props>(), {
   profile: null,
 });
+console.log('Profile.vue props', props);
 </script>
 
 <template>

@@ -10,12 +10,12 @@ TODO:
 // unplugin-auto-import will declare it on src/auto-imports.d.ts
 
 class Profile {
-  id: number | null;
-  name: string;
-  currentWeight: number;
-  targetWeight: number;
-  // burnedList: { timestamp: number; calories: number }[];
-  burnedList: Array<{ timestamp: number; calories: number }>;
+  public id: number | null;
+  public name: string;
+  public currentWeight: number | null;
+  public targetWeight: number | null;
+  // public burnedList: { timestamp: number; calories: number }[];
+  public burnedList: Array<{ timestamp: number; calories: number }> | null;
 
   constructor(
     id: number,
@@ -63,17 +63,21 @@ const loadProfiles = onMounted(() => {
 });
 
 const saveProfile = (id, name, currentWeight, targetWeight) => {
-  console.log('saveProfile', id, name, currentWeight, targetWeight);
+  console.log('---- saveProfile', id, name, currentWeight, targetWeight);
+  if (!id) {
+    let keys = [...profiles.keys()];
+    id = keys.length > 0 ? Math.max(...keys) + 1 : 1;
+  }
   let profile = new Profile(id, name, currentWeight, targetWeight);
-  // save profile
-  let profilId = profile.id ?? Math.max(...profiles.keys()) + 1;
-  profiles.set(profilId, profile);
+  console.log('profile.id', profile.id);
+  profiles.set(id, profile);
   // saveProfiles();
   profiles.forEach(function (value, key) {
-    console.log(key, value);
+    console.log('profile item key', key, 'profile item value', value);
   });
-  selectedProfileId = profilId;
-  showFormProfile = false;
+  console.log('profiles.size', profiles.size);
+  selectedProfileId.value = profile.id;
+  showFormProfile.value = false;
 };
 
 const saveProfiles = () => {
@@ -81,20 +85,30 @@ const saveProfiles = () => {
   localStorage.setItem('profiles', parsed);
 };
 
-const removeCat = (x) => {
-  this.cats.splice(x, 1);
-  this.saveCats();
+const removeProfile = () => {
+  profile.delete(selectedProfileId);
+  saveProfiles();
+};
+
+const openNewFormProfile = () => {
+  console.log('openNewFormProfile');
+  showFormProfile.value = true;
 };
 </script>
 
 <template>
   <v-app>
-    <Header :profiles="profiles" />
+    <div>selectedProfileId: {{ selectedProfileId }}</div>
+    <Header
+      :profiles="profiles"
+      @onEmitOpenNewFormProfile="openNewFormProfile"
+      :showAddButton="!showFormProfile"
+    />
     <v-main>
       <FormProfile
         v-if="showFormProfile"
         @onEmitSaveProfile="saveProfile"
-        :selectedProfileId="selectedProfileId"
+        :profile="selectedProfile"
       />
       <Profile v-if="selectedProfile" :profile="selectedProfile" />
     </v-main>

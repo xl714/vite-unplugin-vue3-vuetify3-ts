@@ -7,17 +7,18 @@
 //   selectedProfileIndex?: number | null
 // }>();
 export interface Props {
-  selectedProfileId?: number | null;
+  // profileId?: number | null;
+  profile?: object | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  selectedProfileId: null,
+  profile: null,
 });
-console.log('props.selectedProfileId', props.selectedProfileId);
+console.log('props.profile', props.profile);
 
-const name = ref('Xavier');
-const currentWeight = ref('88');
-const targetWeight = ref('70');
+const name = ref(props.profile ? props.profile.name : 'Xavier');
+const currentWeight = ref(props.profile ? props.profile.currentWeight : '88');
+const targetWeight = ref(props.profile ? props.profile.targetWeight : '70');
 
 const disabled = computed(() => {
   return !(
@@ -30,6 +31,7 @@ const disabled = computed(() => {
 const emits = defineEmits<{
   (
     e: 'onEmitSaveProfile',
+    id: number,
     name: string,
     currentWeight: number,
     targetWeight: number
@@ -41,7 +43,7 @@ const emitSaveProfile = () => {
   console.log('before emit');
   emits(
     'onEmitSaveProfile',
-    props.selectedProfileId,
+    props.profile ? props.profile.id : null,
     name,
     currentWeight,
     targetWeight
@@ -59,7 +61,10 @@ const emitSaveProfile = () => {
       <v-col cols="2" />
       <v-col cols="6" class="text-left">
         <header>
-          <h2> {{ selectedProfileId ?? `New ` }} Profile {{ selectedProfileId ?? `create new` }}-</h2>
+          <h2>
+            {{ profile ?? `New ` }} Profile
+            {{ profile ? `Id:${profile.id}` : `` }}
+          </h2>
         </header></v-col
       >
       <v-col cols="2" />
@@ -100,7 +105,7 @@ const emitSaveProfile = () => {
         </v-col>
         <v-col class="d-flex text-right" cols="2">
           <v-btn
-            v-if="selectedProfileId"
+            v-if="profile"
             type="button"
             :disabled="disabled"
             variant="outlined"
