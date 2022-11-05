@@ -84,9 +84,10 @@ const selectProfile = (id) => {
     <div>selectedProfileId: {{ selectedProfileId }}</div>
     <Header
       :profiles="profiles"
+      :selectedProfileId="selectedProfileId"
       @onEmitSelectProfile="selectProfile"
       @onEmitOpenNewFormProfile="openNewFormProfile"
-      :showAddButton="!showFormProfile"
+      :showAddButton="!showFormProfile && profiles.size < 3"
     />
     <v-main>
       <FormProfile
