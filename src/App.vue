@@ -83,6 +83,13 @@ const selectProfile = (id: number) => {
   showFormProfile.value = false;
   showProfile.value = true;
 };
+
+const openEditFormProfile = (id: number) => {
+  console.log('openNewFormProfile');
+  selectedProfileId.value = id;
+  showFormProfile.value = true;
+  showProfile.value = false;
+};
 </script>
 
 <template>
@@ -100,7 +107,11 @@ const selectProfile = (id: number) => {
         @onEmitSaveProfile="saveProfile"
         :profile="selectedProfile"
       />
-      <ProfileViewMain v-if="showProfile" :profile="selectedProfile" />
+      <ProfileViewMain
+        v-if="showProfile"
+        :profile="selectedProfile"
+        @onEmitOpenEditFormProfile="openEditFormProfile"
+      />
     </v-main>
   </v-app>
 </template>
