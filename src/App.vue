@@ -12,13 +12,13 @@ TODO:
 import { Profile } from './classes/profile';
 
 let profiles = reactive(new Map());
+let showProfile = ref(false);
+let showFormProfile = ref(false);
 let selectedProfileId = ref(null);
 
 let selectedProfile = computed(() => {
-  return selectedProfileId ? profiles.get(selectedProfileId) : null;
+  return selectedProfileId ? profiles.get(selectedProfileId.value) : null;
 });
-
-let showFormProfile = ref(false);
 
 const loadProfiles = onMounted(() => {
   console.log('mounted profiles', profiles);
@@ -41,13 +41,13 @@ const loadProfiles = onMounted(() => {
   }
 });
 
-const saveProfile = (id, name, currentWeight, targetWeight) => {
-  console.log('---- saveProfile', id, name, currentWeight, targetWeight);
+const saveProfile = (id, name, startWeight, targetWeight) => {
+  console.log('---- saveProfile', id, name, startWeight, targetWeight);
   if (!id) {
     let keys = [...profiles.keys()];
     id = keys.length > 0 ? Math.max(...keys) + 1 : 1;
   }
-  let profile = new Profile(id, name, currentWeight, targetWeight);
+  let profile = new Profile(id, name, startWeight, targetWeight);
   console.log('profile.id', profile.id);
   profiles.set(id, profile);
   saveProfiles();
@@ -57,6 +57,7 @@ const saveProfile = (id, name, currentWeight, targetWeight) => {
   console.log('profiles.size', profiles.size);
   selectedProfileId.value = profile.id;
   showFormProfile.value = false;
+  showProfile.value = true;
 };
 
 const saveProfiles = () => {
@@ -95,7 +96,7 @@ const selectProfile = (id) => {
         @onEmitSaveProfile="saveProfile"
         :profile="selectedProfile"
       />
-      <Profile v-if="selectedProfile" :profile="selectedProfile" />
+      <ProfileViewMain v-if="showProfile" :profile="selectedProfile" />
     </v-main>
   </v-app>
 </template>

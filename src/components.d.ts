@@ -10,7 +10,7 @@ declare module 'vue' {
     'IMdi:account': typeof import('~icons/mdi/account')['default']
     'IMdi:delete': typeof import('~icons/mdi/delete')['default']
     IParkPlusCross: typeof import('~icons/icon-park/plus-cross')['default']
-    Profile: typeof import('./components/Profile.vue')['default']
+    ProfileViewMain: typeof import('./components/ProfileViewMain.vue')['default']
   }
 }
 

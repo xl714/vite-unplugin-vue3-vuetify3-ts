@@ -17,13 +17,13 @@ const props = withDefaults(defineProps<Props>(), {
 console.log('props.profile', props.profile);
 
 const name = ref(props.profile ? props.profile.name : 'Xavier');
-const currentWeight = ref(props.profile ? props.profile.currentWeight : '88');
+const startWeight = ref(props.profile ? props.profile.startWeight : '88');
 const targetWeight = ref(props.profile ? props.profile.targetWeight : '70');
 
 const disabled = computed(() => {
   return !(
     name.value.trim().length > 0 &&
-    currentWeight.value > 0 &&
+    startWeight.value > 0 &&
     targetWeight.value > 0
   );
 });
@@ -33,7 +33,7 @@ const emits = defineEmits<{
     e: 'onEmitSaveProfile',
     id: number,
     name: string,
-    currentWeight: number,
+    startWeight: number,
     targetWeight: number
   ): void;
 }>();
@@ -45,7 +45,7 @@ const emitSaveProfile = () => {
     'onEmitSaveProfile',
     props.profile ? props.profile.id : null,
     name,
-    currentWeight,
+    startWeight,
     targetWeight
   );
   console.log('after emit');
@@ -77,8 +77,8 @@ const emitSaveProfile = () => {
       ></v-text-field>
 
       <v-text-field
-        label="What's your current weight in kilogrammes ?"
-        v-model="currentWeight"
+        label="What's your starting weight in kilogrammes ?"
+        v-model="startWeight"
         append-icon="IMdiAccount"
         type="number"
       ></v-text-field>
