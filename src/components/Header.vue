@@ -1,7 +1,25 @@
+<script setup lang="ts">
+// https://vuejs.org/api/sfc-script-setup.html#typescript-only-features
+export interface Props {
+  profiles?: Map | null;
+}
+const props = withDefaults(defineProps<Props>(), {
+  profiles: null,
+});
+</script>
+
 <template>
   <header>
     <i-park-plus-cross />
     <i-mdi:account />
+
+    <div v-for="[id, item] in profiles" :key="id">
+      <p>
+        <i-mdi:account />
+        <span class="profile">{{ item.name }}</span>
+        <button @click="removeProfile(id)">[remove]</button>
+      </p>
+    </div>
   </header>
 </template>
 
