@@ -49,7 +49,7 @@ const saveProfile = (id, name, startWeight, targetWeight) => {
   showProfile.value = true;
 };
 
-const onEmitOpenProfiles = () => {
+const openProfiles = () => {
   console.log('onEmitOpenProfiles');
   showProfiles.value = true;
   showFormProfile.value = false;
@@ -81,14 +81,7 @@ const openEditFormProfile = (id: number) => {
 
 <template>
   <v-app id="inspire">
-    <Header
-      v-if="showProfiles"
-      :profile="selectedProfile"
-      @onEmitSelectProfile="selectProfile"
-      @onEmitOpenNewFormProfile="openNewFormProfile"
-      :showAddButton="!showFormProfile && profiles.size < 3"
-    />
-
+    <Header :profile="selectedProfile" @onEmitOpenProfiles="openProfiles" />
     <v-main>
       <FormProfile
         v-if="showFormProfile"
