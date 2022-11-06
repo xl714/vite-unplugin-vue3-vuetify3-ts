@@ -9,33 +9,27 @@ TODO:
 */
 // unplugin-auto-import will declare it on src/auto-imports.d.ts
 
-import { Profile } from './classes/profile';
+import { Profile, ProfileListManagerLocalStorage } from './classes/profile';
 
+const profilesMngr = new ProfileListManagerLocalStorage();
 let profiles = reactive(new Map());
+let selectedProfileId = ref(null);
 let showProfile = ref(false);
 let showFormProfile = ref(false);
-let selectedProfileId = ref(null);
 
 let selectedProfile = computed(() => {
-  return selectedProfileId ? profiles.get(selectedProfileId.value) : null;
+  return profilesMngr.getById(selectedProfileId.value, new Profile());
 });
 
 const loadProfiles = onMounted(() => {
   console.log('mounted profiles', profiles);
   console.log('mounted profiles.size', profiles.size);
-
-  if (localStorage.getItem('profiles')) {
-    try {
-      profiles.value = JSON.parse(localStorage.getItem('profiles'));
-      console.log('this.profiles', this.profiles.value);
-    } catch (e) {
-      localStorage.removeItem('profiles');
-      console.log("localStorage.removeItem('profiles');");
-    }
-  }
-  console.log('profiles.size');
-  console.log(profiles.size);
-  if (!profiles.size) {
+  profiles.value = profilesMngr.loadList();
+  console.log('typeof profiles', typeof profiles);
+  console.log('typeof profiles.value', typeof profiles.value);
+  console.log('profiles.size', profiles.size);
+  console.log('profiles.value.size', profiles.value.size);
+  if (!(profiles.value && profiles.size.value)) {
     showFormProfile.value = true;
     console.log('showFormProfile.value', showFormProfile.value);
   }
@@ -43,32 +37,15 @@ const loadProfiles = onMounted(() => {
 
 const saveProfile = (id, name, startWeight, targetWeight) => {
   console.log('---- saveProfile:', id, name, startWeight, targetWeight);
-  if (!id) {
-    let keys = [...profiles.keys()];
-    id = keys.length > 0 ? Math.max(...keys) + 1 : 1;
-  }
   let profile = new Profile(id, name, startWeight, targetWeight);
-  console.log('profile.id', profile.id);
-  profiles.set(id, profile);
-  saveProfiles();
-  profiles.forEach(function (v, k) {
-    console.log('profile item id', k, 'profileItem', v.toStr());
-  });
-  console.log('profiles.size', profiles.size);
+  profilesMngr.saveProfile(profile);
+  profiles.value = profilesMngr.getList();
+  console.log(profilesMngr.toString());
+  console.log('typeof profiles.value', typeof profiles.value);
+  console.log('profiles.value.size', profiles.value.size);
   selectedProfileId.value = profile.id;
   showFormProfile.value = false;
   showProfile.value = true;
-};
-
-const saveProfiles = () => {
-  const parsed = JSON.stringify(profiles);
-  //localStorage.setItem('profiles', parsed);
-  console.log('saveProfiles', parsed);
-};
-
-const removeProfile = () => {
-  profile.delete(selectedProfileId);
-  saveProfiles();
 };
 
 const openNewFormProfile = () => {
@@ -94,13 +71,6 @@ const openEditFormProfile = (id: number) => {
 
 <template>
   <v-app id="inspire">
-    <v-system-bar dark color="indigo darken-2">
-      <v-spacer></v-spacer>
-      <v-icon>mdi-wifi-strength-4</v-icon>
-      <v-icon>mdi-signal-cellular-outline</v-icon>
-      <v-icon>mdi-battery</v-icon>
-      <span>12:30</span>
-    </v-system-bar>
     <Header
       :profiles="profiles"
       :selectedProfileId="selectedProfileId"
@@ -108,6 +78,7 @@ const openEditFormProfile = (id: number) => {
       @onEmitOpenNewFormProfile="openNewFormProfile"
       :showAddButton="!showFormProfile && profiles.size < 3"
     />
+
     <v-main>
       <FormProfile
         v-if="showFormProfile"
