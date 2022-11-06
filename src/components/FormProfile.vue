@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import IconAccount from '~icons/mdi/account';
+import IconWeightKilogram from '~icons/mdi/weight-kilogram';
 import { Profile } from '../classes/profile';
 // unplugin-auto-import will declare it on src/auto-imports.d.ts
 
@@ -76,19 +77,20 @@ const emitSaveProfile = () => {
         autofocus
         label="What's your name?"
         v-model="name"
+        :prepend-icon="IconAccount"
       ></v-text-field>
 
       <v-text-field
         label="What's your starting weight in kilogrammes ?"
         v-model="startWeight"
-        prepend-icon="mdi-account"
+        :prepend-icon="IconWeightKilogram"
         type="number"
       ></v-text-field>
       <!--WeightKilogram-->
       <v-text-field
         label="What's your target weight in kilogrammes ?"
         v-model="targetWeight"
-        append-icon="IconAccountBox"
+        :prepend-icon="IconWeightKilogram"
         type="number"
       ></v-text-field>
       <v-row>
