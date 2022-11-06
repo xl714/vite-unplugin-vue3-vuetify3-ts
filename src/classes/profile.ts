@@ -23,11 +23,8 @@ class Profile {
     this.weightList = weightList;
   }
 
-  str = () => {
-    console.log('this.name', this.name);
-    console.log('this.startWeight', this.startWeight);
-    console.log('this.targetWeight', this.targetWeight);
-    return `{ id: ${this.id}, name: ${this.name}, startWeight: ${this.startWeight}, targetWeight:${this.targetWeight} }`;
+  toStr = () => {
+    return `Profile{id:${this.id}, name:${this.name}, startWeight:${this.startWeight}, targetWeight:${this.targetWeight} }`;
   };
 }
 

@@ -51,8 +51,8 @@ const saveProfile = (id, name, startWeight, targetWeight) => {
   console.log('profile.id', profile.id);
   profiles.set(id, profile);
   saveProfiles();
-  profiles.forEach(function (profileItem, id) {
-    console.log('profile item id', id, 'profileItem', profileItem.str());
+  profiles.forEach(function (v, k) {
+    console.log('profile item id', k, 'profileItem', v.toStr());
   });
   console.log('profiles.size', profiles.size);
   selectedProfileId.value = profile.id;
