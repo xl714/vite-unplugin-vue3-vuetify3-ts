@@ -15,6 +15,7 @@ const profilesMngr = new ProfileListManagerLocalStorage();
 let profiles = reactive(new Map());
 let selectedProfileId = ref(null);
 let showProfile = ref(false);
+let showProfiles = ref(false);
 let showFormProfile = ref(false);
 
 let selectedProfile = computed(() => {
@@ -48,16 +49,25 @@ const saveProfile = (id, name, startWeight, targetWeight) => {
   showProfile.value = true;
 };
 
+const onEmitOpenProfiles = () => {
+  console.log('onEmitOpenProfiles');
+  showProfiles.value = true;
+  showFormProfile.value = false;
+  showProfile.value = false;
+};
+
 const openNewFormProfile = () => {
   console.log('openNewFormProfile');
   selectedProfileId.value = null;
-  showFormProfile.value = true;
   showProfile.value = false;
+  showProfiles.value = false;
+  showFormProfile.value = true;
 };
 const selectProfile = (id: number) => {
   console.log('selectProfile', id);
   selectedProfileId.value = parseInt(id);
   showFormProfile.value = false;
+  showProfiles.value = false;
   showProfile.value = true;
 };
 
@@ -72,8 +82,8 @@ const openEditFormProfile = (id: number) => {
 <template>
   <v-app id="inspire">
     <Header
-      :profiles="profiles"
-      :selectedProfileId="selectedProfileId"
+      v-if="showProfiles"
+      :profile="selectedProfile"
       @onEmitSelectProfile="selectProfile"
       @onEmitOpenNewFormProfile="openNewFormProfile"
       :showAddButton="!showFormProfile && profiles.size < 3"
@@ -84,6 +94,13 @@ const openEditFormProfile = (id: number) => {
         v-if="showFormProfile"
         @onEmitSaveProfile="saveProfile"
         :profile="selectedProfile"
+      />
+      <Profiles
+        :profiles="profiles"
+        :selectedProfileId="selectedProfileId"
+        @onEmitSelectProfile="selectProfile"
+        @onEmitOpenNewFormProfile="openNewFormProfile"
+        :showAddButton="!showFormProfile && profiles.size < 3"
       />
       <ProfileViewMain
         v-if="showProfile"

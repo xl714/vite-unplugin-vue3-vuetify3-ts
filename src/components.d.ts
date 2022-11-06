@@ -7,10 +7,12 @@ declare module 'vue' {
     Form: typeof import('./components/Form.vue')['default']
     FormProfile: typeof import('./components/FormProfile.vue')['default']
     Header: typeof import('./components/Header.vue')['default']
+    'IMdi:account': typeof import('~icons/mdi/account')['default']
     'IMdi:delete': typeof import('~icons/mdi/delete')['default']
     'IMdi:edit': typeof import('~icons/mdi/edit')['default']
     'IMdi:fire': typeof import('~icons/mdi/fire')['default']
     IParkPlusCross: typeof import('~icons/icon-park/plus-cross')['default']
+    Profiles: typeof import('./components/Profiles.vue')['default']
     ProfileViewMain: typeof import('./components/ProfileViewMain.vue')['default']
   }
 }

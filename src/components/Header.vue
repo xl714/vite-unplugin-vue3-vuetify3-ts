@@ -1,58 +1,33 @@
 <script setup lang="ts">
 // https://vuejs.org/api/sfc-script-setup.html#typescript-only-features
+import { Profile } from '../classes/profile';
 export interface Props {
-  selectedProfileId?: number | null;
-  profiles?: Map | null;
-  showAddButton?: boolean | null;
+  profile?: Profile | null;
 }
 const props = withDefaults(defineProps<Props>(), {
-  selectedProfileId: null,
-  profiles: null,
-  showAddButton: true,
+  profile: null,
 });
 
 const emits = defineEmits<{
-  (e: 'onEmitSelectProfile', id: number): void;
-  (e: 'onEmitOpenNewFormProfile'): void;
+  (e: 'onEmitOpenProfiles'): void;
 }>();
 
-const emitOpenNewFormProfile = () => {
-  console.log('Before onEmitOpenNewFormProfile');
-  emits('onEmitOpenNewFormProfile');
-  console.log('After onEmitOpenNewFormProfile');
-};
-
-const emitSelectProfile = (e) => {
-  let selectedId = parseInt(e.currentTarget.getAttribute('data-id'));
-  console.log('Before onEmitSelectProfile');
-  emits('onEmitSelectProfile', selectedId);
-  //props.selectedProfileId.value = parseInt(selectedId);
-  console.log('After onEmitSelectProfile');
+const emitOpenProfiles = () => {
+  console.log('Before onEmitOpenprofiles');
+  emits('onEmitOpenProfiles');
+  console.log('After onEmitOpenprofiles');
 };
 </script>
 
 <template>
   <v-app-bar app color="teal" dark>
     <v-app-bar-nav-icon><i-mdi:fire /></v-app-bar-nav-icon>
-    <v-toolbar-title>Application</v-toolbar-title>
-    <div v-for="[id, item] in profiles" :key="id">
-      <v-card
-        :data-id="item.id"
-        @click="emitSelectProfile"
-        :class="props.selectedProfileId == item.id ? `selected` : ``"
-        :outlined="props.selectedProfileId == item.id ? `outlined` : ``"
-        class="text-left"
-      >
-        <v-avatar class="m-1" size="150">
-          <!-- <i-mdi:account /> -->{{ item.name }}
-        </v-avatar>
-        <v-card-title> </v-card-title>
-      </v-card>
-    </div>
+    <v-toolbar-title>Calories CountDown</v-toolbar-title>
     <v-spacer />
-    <v-btn v-if="showAddButton" @click="emitOpenNewFormProfile" block>
-      <i-park-plus-cross /> New profile
-    </v-btn>
+    <v-avatar v-if="profile.id" class="m-1" size="150">
+      <i-mdi:account /> {{ profile.name }}
+    </v-avatar>
+    <v-btn v-else @click="emitOpenProfiles"> <i-mdi:account /> Profiles </v-btn>
   </v-app-bar>
 </template>
 
