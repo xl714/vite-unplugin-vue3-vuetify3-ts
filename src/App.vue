@@ -42,7 +42,7 @@ const loadProfiles = onMounted(() => {
 });
 
 const saveProfile = (id, name, startWeight, targetWeight) => {
-  console.log('---- saveProfile', id, name, startWeight, targetWeight);
+  console.log('---- saveProfile:', id, name, startWeight, targetWeight);
   if (!id) {
     let keys = [...profiles.keys()];
     id = keys.length > 0 ? Math.max(...keys) + 1 : 1;
@@ -51,8 +51,8 @@ const saveProfile = (id, name, startWeight, targetWeight) => {
   console.log('profile.id', profile.id);
   profiles.set(id, profile);
   saveProfiles();
-  profiles.forEach(function (value, key) {
-    console.log('profile item key', key, 'profile item value', value);
+  profiles.forEach(function (profileItem, id) {
+    console.log('profile item id', id, 'profileItem', profileItem.str());
   });
   console.log('profiles.size', profiles.size);
   selectedProfileId.value = profile.id;
@@ -93,7 +93,14 @@ const openEditFormProfile = (id: number) => {
 </script>
 
 <template>
-  <v-app>
+  <v-app id="inspire">
+    <v-system-bar dark color="indigo darken-2">
+      <v-spacer></v-spacer>
+      <v-icon>mdi-wifi-strength-4</v-icon>
+      <v-icon>mdi-signal-cellular-outline</v-icon>
+      <v-icon>mdi-battery</v-icon>
+      <span>12:30</span>
+    </v-system-bar>
     <Header
       :profiles="profiles"
       :selectedProfileId="selectedProfileId"
@@ -116,6 +123,10 @@ const openEditFormProfile = (id: number) => {
   </v-app>
 </template>
 <style scoped>
+html,
+body {
+  margin-top: 0px !important;
+}
 .v-main {
   padding: 1rem 0;
 }

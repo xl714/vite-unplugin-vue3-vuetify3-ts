@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import IconAccount from '~icons/mdi/account';
 import { Profile } from '../classes/profile';
 // unplugin-auto-import will declare it on src/auto-imports.d.ts
 
@@ -45,9 +46,9 @@ const emitSaveProfile = () => {
   emits(
     'onEmitSaveProfile',
     props.profile ? props.profile.id : null,
-    name,
-    startWeight,
-    targetWeight
+    name.value,
+    startWeight.value,
+    targetWeight.value
   );
   console.log('after emit');
 };
@@ -80,17 +81,16 @@ const emitSaveProfile = () => {
       <v-text-field
         label="What's your starting weight in kilogrammes ?"
         v-model="startWeight"
-        append-icon="IMdiAccount"
+        prepend-icon="mdi-account"
         type="number"
       ></v-text-field>
-
+      <!--WeightKilogram-->
       <v-text-field
         label="What's your target weight in kilogrammes ?"
         v-model="targetWeight"
-        append-icon="mdiWeightKilogram"
+        append-icon="IconAccountBox"
         type="number"
       ></v-text-field>
-
       <v-row>
         <v-col cols="2" />
         <v-col cols="6" class="text-left">
@@ -106,7 +106,7 @@ const emitSaveProfile = () => {
         </v-col>
         <v-col class="d-flex text-right" cols="2">
           <v-btn
-            v-if="profile"
+            v-if="profile.id"
             type="button"
             :disabled="disabled"
             variant="outlined"
