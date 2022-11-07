@@ -44,6 +44,16 @@ const saveProfile = (id, name, startWeight, targetWeight) => {
   showProfile.value = true;
 };
 
+const removeProfile = (id: number) => {
+  console.log('selectProfile', id);
+  profilesMngr.removeProfile(id);
+  profiles.value = profilesMngr.getList();
+  selectedProfileId.value = null;
+  showFormProfile.value = false;
+  showProfile.value = false;
+  showProfiles.value = true;
+};
+
 const selectProfile = (id: number) => {
   console.log('selectProfile', id);
   selectedProfileId.value = parseInt(id);
@@ -88,6 +98,7 @@ const openEditFormProfile = (id: number) => {
       <FormProfile
         v-else-if="showFormProfile"
         @onEmitSaveProfile="saveProfile"
+        @onEmitRemoveProfile="removeProfile"
         :profile="selectedProfile"
       />
       <Profiles

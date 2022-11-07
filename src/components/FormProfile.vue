@@ -39,11 +39,12 @@ const emits = defineEmits<{
     startWeight: number,
     targetWeight: number
   ): void;
+  (e: 'onEmitRemoveProfile', id: number): void;
 }>();
 
 const emitSaveProfile = () => {
   //name.value && alert(`Hi ${name.value}`);
-  console.log('before emit');
+  console.log('before emit onEmitSaveProfile');
   emits(
     'onEmitSaveProfile',
     props.profile ? props.profile.id : null,
@@ -51,7 +52,14 @@ const emitSaveProfile = () => {
     startWeight.value,
     targetWeight.value
   );
-  console.log('after emit');
+  console.log('after emit onEmitSaveProfile');
+};
+
+const emitRemoveProfile = () => {
+  //name.value && alert(`Hi ${name.value}`);
+  console.log(`before emit emitRemoveProfile (id: ${props.profile.id})`);
+  emits('onEmitRemoveProfile', props.profile.id);
+  console.log('after emit emitRemoveProfile');
 };
 
 // https://stackblitz.com/edit/vite-kmhcnp?file=src%2FApp.vue
@@ -103,12 +111,13 @@ const emitSaveProfile = () => {
             color="primary"
             text
           >
-            Sauvegarder
+            Save
           </v-btn>
         </v-col>
         <v-col class="d-flex text-right" cols="2">
           <v-btn
             v-if="profile.id"
+            @click="emitRemoveProfile"
             type="button"
             :disabled="disabled"
             variant="outlined"

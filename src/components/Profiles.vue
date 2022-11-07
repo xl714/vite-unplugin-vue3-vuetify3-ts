@@ -51,24 +51,42 @@ const emitSelectProfile = (e) => {
       </v-col>
     </v-row>
     <v-row>
-      <v-col v-for="[id, item] in props.profiles.value" :key="id">
-        <v-card
-          :class="props.selectedProfileId == item.id ? `selected` : ``"
-          :outlined="props.selectedProfileId == item.id ? `outlined` : ``"
-        >
-          <i-mdi:account class="white--text align-end" height="100px" />
-          <v-card-title>{{ item.name }}</v-card-title>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn text :data-id="item.id" @click="emitOpenEditFormProfile">
-              Edit
-            </v-btn>
-            <v-btn text :data-id="item.id" @click="emitSelectProfile">
-              Select
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
+      <v-card
+        v-for="[id, item] in props.profiles.value"
+        :key="id"
+        :class="props.selectedProfileId == item.id ? `selected` : ``"
+        :outlined="props.selectedProfileId == item.id ? `outlined` : ``"
+        class="mx-auto"
+        max-width="400"
+        outlined
+      >
+        <v-list-item three-line>
+          <v-list-item-content>
+            <div class="text-overline mb-4">Profile</div>
+            <v-list-item-title class="text-h5 mb-1">
+              {{ item.name }}
+            </v-list-item-title>
+            <v-list-item-subtitle
+              >From {{ item.startWeight }} to
+              {{ item.targetWeight }}</v-list-item-subtitle
+            >
+          </v-list-item-content>
+
+          <v-list-item-avatar tile size="80" color="grey">
+            <i-mdi:account class="align-end" />
+          </v-list-item-avatar>
+        </v-list-item>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text :data-id="item.id" @click="emitOpenEditFormProfile">
+            Edit
+          </v-btn>
+          <v-btn text :data-id="item.id" @click="emitSelectProfile">
+            Select
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-row>
   </v-container>
 </template>
