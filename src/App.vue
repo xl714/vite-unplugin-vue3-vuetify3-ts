@@ -48,9 +48,9 @@ const saveProfile = (id, name, startWeight, targetWeight) => {
 
 const saveProfileData = (
   id: number,
-  date: string,
+  date: Date,
   weight: number,
-  calories
+  calories: number
 ) => {
   console.log('saveProfileData:', id, date, weight, calories);
 };

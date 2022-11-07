@@ -37,15 +37,15 @@ const emitOpenEditFormProfile = () => {
 
 const emitSaveProfileData = () => {
   //name.value && alert(`Hi ${name.value}`);
-  console.log('emitSaveProfileData before emit');
+  console.log('ProfileViewMain emitSaveProfileData before emit');
   emits(
     'onEmitSaveProfileData',
     parseInt(props.profile.id),
-    datePicked,
+    datePicked.value,
     weight.value,
     calories.value
   );
-  console.log('emitSaveProfileData after emit');
+  console.log('ProfileViewMain emitSaveProfileData after emit');
 };
 
 const datePickedChanged = (date: Date) => {
