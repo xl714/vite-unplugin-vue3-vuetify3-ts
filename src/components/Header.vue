@@ -22,17 +22,12 @@ const emitOpenProfiles = () => {
 <template>
   <v-app-bar app color="teal" dark>
     <v-app-bar-nav-icon><i-mdi:fire /></v-app-bar-nav-icon>
-    <v-toolbar-title>Calories CountDown</v-toolbar-title>
-    <v-spacer />
-    <v-avatar
-      v-if="profile.id"
-      @click="emitOpenProfiles"
-      class="m-1"
-      size="150"
+    <v-toolbar-title
+      >{{ profile.id ? `${profile.name}'s` : `` }} Calories
+      CountDown</v-toolbar-title
     >
-      <i-mdi:account /> {{ profile.name }}
-    </v-avatar>
-    <v-btn v-else @click="emitOpenProfiles"> <i-mdi:account /> Profiles </v-btn>
+    <v-spacer />
+    <v-btn @click="emitOpenProfiles"> <i-mdi:account /> Profiles </v-btn>
   </v-app-bar>
 </template>
 
