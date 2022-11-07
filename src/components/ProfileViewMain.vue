@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { Profile } from '../classes/profile';
+import IconWeightKilogram from '~icons/mdi/weight-kilogram';
+import IconFire from '~icons/mdi/fire';
 // import Datepicker from 'vue3-datepicker';
 
 export interface Props {
@@ -98,19 +100,29 @@ const switchLegend = () => {
             <v-row justify="center">
               <date-picker-day :datePicked="datePicked"></date-picker-day>
             </v-row>
-            <v-row>
-              <v-col cols="4">
-                <v-text-field label="Legal first name*" required></v-text-field>
-              </v-col>
-              <v-col cols="4">
+            <v-row justify="center">
+              <v-col cols="3" />
+              <v-col cols="6">
                 <v-text-field
-                  label="Legal middle name"
-                  hint="example of helper text only on focus"
+                  label="New weight:"
+                  v-model="targetWeight"
+                  :prepend-icon="IconWeightKilogram"
+                  type="number"
                 ></v-text-field>
               </v-col>
-              <v-col cols="4">
-                <v-text-field label="Legal first name*" required></v-text-field>
+              <v-col cols="3" />
+            </v-row>
+            <v-row justify="center">
+              <v-col cols="3" />
+              <v-col cols="6">
+                <v-text-field
+                  label="New calories burned !"
+                  v-model="targetWeight"
+                  :prepend-icon="IconFire"
+                  type="number"
+                ></v-text-field>
               </v-col>
+              <v-col cols="3" />
             </v-row>
           </v-container>
         </v-card-text>

@@ -15,9 +15,8 @@ console.log('Profile.vue props.datePicked', props.datePicked);
       v-input v-input--horizontal v-input--density-default v-input--dirty
       v-text-field
     "
-    data-v-cc58f876=""
   >
-    <div class="v-input__prepend"><!----><i-mdi:calendar /></div>
+    <div class="v-input__prepend"><i-mdi:calendar /></div>
     <div class="v-input__control">
       <div
         class="
@@ -52,24 +51,17 @@ console.log('Profile.vue props.datePicked', props.datePicked);
           <label
             class="v-label v-field-label v-field-label--floating"
             aria-hidden="true"
-            for="input-20"
+            for="input-datepicker"
             ><!---->Date</label
-          ><label class="v-label v-field-label" for="input-20"
-            ><!---->Date</label
-          ><!---->
-          <!--input
-            autofocus=""
-            size="1"
-            type="text"
-            id="input-20"
-            class="v-field__input"
-          /-->
+          ><label class="v-label v-field-label" for="input-datepicker"
+            >Date</label
+          >
           <datepicker
             v-model="datePicked"
             autofocus=""
             size="1"
             type="text"
-            id="input-20"
+            id="input-datepicker"
             class="v-field__input"
           ></datepicker>
           <!---->
@@ -85,3 +77,17 @@ console.log('Profile.vue props.datePicked', props.datePicked);
     </div>
   </div>
 </template>
+<style scoped>
+.v-field__field {
+  display: auto !important;
+}
+input {
+  width: auto !important;
+}
+.v3dp__datepicker {
+  width: 200px;
+}
+.v3dp__popout {
+  z-index: 99999999;
+}
+</style>
