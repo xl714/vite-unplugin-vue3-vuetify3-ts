@@ -46,14 +46,23 @@ const saveProfile = (id, name, startWeight, targetWeight) => {
   console.log('profiles.value.size', profiles.value.size);
   selectedProfileId.value = profile.id;
   showFormProfile.value = false;
+  showProfiles.value = false;
+  showProfile.value = true;
+};
+
+const selectProfile = (id: number) => {
+  console.log('selectProfile', id);
+  selectedProfileId.value = parseInt(id);
+  showFormProfile.value = false;
+  showProfiles.value = false;
   showProfile.value = true;
 };
 
 const openProfiles = () => {
   console.log('onEmitOpenProfiles');
-  showProfiles.value = true;
   showFormProfile.value = false;
   showProfile.value = false;
+  showProfiles.value = true;
 };
 
 const openNewFormProfile = () => {
@@ -62,13 +71,6 @@ const openNewFormProfile = () => {
   showProfile.value = false;
   showProfiles.value = false;
   showFormProfile.value = true;
-};
-const selectProfile = (id: number) => {
-  console.log('selectProfile', id);
-  selectedProfileId.value = parseInt(id);
-  showFormProfile.value = false;
-  showProfiles.value = false;
-  showProfile.value = true;
 };
 
 const openEditFormProfile = (id: number) => {
@@ -83,22 +85,22 @@ const openEditFormProfile = (id: number) => {
   <v-app id="inspire">
     <Header :profile="selectedProfile" @onEmitOpenProfiles="openProfiles" />
     <v-main>
-      <FormProfile
-        v-if="showFormProfile"
-        @onEmitSaveProfile="saveProfile"
-        :profile="selectedProfile"
-      />
-      <Profiles
-        :profiles="profiles"
-        :selectedProfileId="selectedProfileId"
-        @onEmitSelectProfile="selectProfile"
-        @onEmitOpenNewFormProfile="openNewFormProfile"
-        :showAddButton="!showFormProfile && profiles.size < 3"
-      />
       <ProfileViewMain
         v-if="showProfile"
         :profile="selectedProfile"
         @onEmitOpenEditFormProfile="openEditFormProfile"
+      />
+      <FormProfile
+        v-else-if="showFormProfile"
+        @onEmitSaveProfile="saveProfile"
+        :profile="selectedProfile"
+      />
+      <Profiles
+        v-else-if="showProfiles"
+        :profiles="profiles"
+        :selectedProfileId="selectedProfileId"
+        @onEmitSelectProfile="selectProfile"
+        @onEmitOpenNewFormProfile="openNewFormProfile"
       />
     </v-main>
   </v-app>

@@ -2,14 +2,13 @@
 // https://vuejs.org/api/sfc-script-setup.html#typescript-only-features
 export interface Props {
   selectedProfileId?: number | null;
-  profiles?: Map | null;
-  showAddButton?: boolean | null;
+  profiles: Map | null;
 }
 const props = withDefaults(defineProps<Props>(), {
   selectedProfileId: null,
-  profiles: null,
-  showAddButton: true,
+  profiles: Map | null,
 });
+console.log('profiles', props.profiles);
 
 const emits = defineEmits<{
   (e: 'onEmitSelectProfile', id: number): void;
@@ -31,29 +30,57 @@ const emitSelectProfile = (e) => {
 };
 </script>
 
+<!-- <template>
+  <div v-for="[id, item] in profiles" :key="id">
+    <v-card
+      :data-id="item.id"
+      @click="emitSelectProfile"
+      :class="props.selectedProfileId == item.id ? `selected` : ``"
+      :outlined="props.selectedProfileId == item.id ? `outlined` : ``"
+      class="text-left"
+    >
+      <v-avatar class="m-1" size="150">
+        <i-mdi:account />{{ item.name }}
+      </v-avatar>
+      <v-card-title> </v-card-title>
+    </v-card>
+  </div>
+
+  
+</template> -->
 <template>
-  <v-app-bar app color="teal" dark>
-    <v-app-bar-nav-icon><i-mdi:fire /></v-app-bar-nav-icon>
-    <v-toolbar-title>Application</v-toolbar-title>
-    <div v-for="[id, item] in profiles" :key="id">
-      <v-card
-        :data-id="item.id"
-        @click="emitSelectProfile"
-        :class="props.selectedProfileId == item.id ? `selected` : ``"
-        :outlined="props.selectedProfileId == item.id ? `outlined` : ``"
-        class="text-left"
-      >
-        <v-avatar class="m-1" size="150">
-          <!-- <i-mdi:account /> -->{{ item.name }}
-        </v-avatar>
-        <v-card-title> </v-card-title>
-      </v-card>
-    </div>
-    <v-spacer />
-    <v-btn v-if="showAddButton" @click="emitOpenNewFormProfile" block>
-      <i-park-plus-cross /> New profile
-    </v-btn>
-  </v-app-bar>
+  <v-container fluid max-width="500">
+    <v-row>
+      <v-btn @click="emitOpenNewFormProfile" block>
+        <i-park-plus-cross /> New profile
+      </v-btn>
+    </v-row>
+    <v-row dense>
+      <v-col v-for="[id, item] in profiles" :key="id">
+        <v-card
+          @click="emitSelectProfile"
+          :class="props.selectedProfileId == item.id ? `selected` : ``"
+          :outlined="props.selectedProfileId == item.id ? `outlined` : ``"
+        >
+          <i-mdi:account
+            class="white--text align-end"
+            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+            height="200px"
+          />
+          <v-card-title>{{ item.name }}</v-card-title>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn icon>
+              <i-mdi:account />
+            </v-btn>
+            <v-btn icon>
+              <i-mdi:account />
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <style lang="scss" scoped>
