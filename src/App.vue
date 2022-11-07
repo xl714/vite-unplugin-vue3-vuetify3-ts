@@ -14,11 +14,15 @@ import { Profile, ProfileListManagerLocalStorage } from './classes/profile';
 const profilesMngr = new ProfileListManagerLocalStorage();
 let profiles = reactive(new Map());
 let selectedProfileId = ref(null);
-let showProfile = ref(false);
+let showProfileViewMain = ref(false);
 let showProfiles = ref(false);
 let showFormProfile = ref(false);
+let forceUpdateKey = ref(0); // https://stackoverflow.com/questions/42678983/vue-js-computed-property-not-updating
 
 let selectedProfile = computed(() => {
+  console.log(
+    `computed selectedProfile forceUpdateKey.value: ${forceUpdateKey.value}`
+  );
   return profilesMngr.getById(selectedProfileId.value, new Profile());
 });
 
@@ -35,53 +39,62 @@ const loadProfiles = onMounted(() => {
 const saveProfile = (id, name, startWeight, targetWeight) => {
   console.log('---- saveProfile:', id, name, startWeight, targetWeight);
   let profile = new Profile(id, name, startWeight, targetWeight);
-  profilesMngr.saveProfile(profile);
+  profile = profilesMngr.saveProfile(profile);
+  console.log('Saved Profile:', profile.toString());
   profiles.value = profilesMngr.getList();
   console.log(profilesMngr.toString());
-  selectedProfileId.value = profile.id;
-  showFormProfile.value = false;
-  showProfiles.value = false;
-  showProfile.value = true;
+  openProfileViewMain(profile.id);
 };
 
 const removeProfile = (id: number) => {
   console.log('selectProfile', id);
   profilesMngr.removeProfile(id);
   profiles.value = profilesMngr.getList();
-  selectedProfileId.value = null;
-  showFormProfile.value = false;
-  showProfile.value = false;
-  showProfiles.value = true;
+  openProfiles();
 };
 
 const selectProfile = (id: number) => {
-  console.log('selectProfile', id);
-  selectedProfileId.value = parseInt(id);
+  console.log(`selectProfile(id:${id})`);
+  openProfileViewMain(id);
+};
+
+const openProfileViewMain = (id: number) => {
+  console.log(`openProfileViewMain(id:${id})`);
+  forceUpdateKey.value++;
+  console.log('forceUpdateKey.value', forceUpdateKey.value);
+  selectedProfileId.value = id;
   showFormProfile.value = false;
   showProfiles.value = false;
-  showProfile.value = true;
+  showProfileViewMain.value = true;
 };
 
 const openProfiles = () => {
-  console.log('onEmitOpenProfiles');
+  console.log('openProfiles');
+  forceUpdateKey.value++;
+  console.log('forceUpdateKey.value', forceUpdateKey.value);
+  selectedProfileId.value = null;
   showFormProfile.value = false;
-  showProfile.value = false;
+  showProfileViewMain.value = false;
   showProfiles.value = true;
 };
 
 const openNewFormProfile = () => {
   console.log('openNewFormProfile');
+  forceUpdateKey.value++;
+  console.log('forceUpdateKey.value', forceUpdateKey.value);
   selectedProfileId.value = null;
-  showProfile.value = false;
+  showProfileViewMain.value = false;
   showProfiles.value = false;
   showFormProfile.value = true;
 };
 
 const openEditFormProfile = (id: number) => {
-  console.log('openEditFormProfile');
+  console.log(`openEditFormProfile(id:${id})`);
+  forceUpdateKey.value++;
+  console.log('forceUpdateKey.value', forceUpdateKey.value);
   selectedProfileId.value = id;
   showProfiles.value = false;
-  showProfile.value = false;
+  showProfileViewMain.value = false;
   showFormProfile.value = true;
 };
 </script>
@@ -91,15 +104,17 @@ const openEditFormProfile = (id: number) => {
     <Header :profile="selectedProfile" @onEmitOpenProfiles="openProfiles" />
     <v-main>
       <ProfileViewMain
-        v-if="showProfile"
+        v-if="showProfileViewMain"
         :profile="selectedProfile"
         @onEmitOpenEditFormProfile="openEditFormProfile"
+        :key="forceUpdateKey"
       />
       <FormProfile
         v-else-if="showFormProfile"
         @onEmitSaveProfile="saveProfile"
         @onEmitRemoveProfile="removeProfile"
         :profile="selectedProfile"
+        :key="forceUpdateKey"
       />
       <Profiles
         v-else-if="showProfiles"
@@ -108,6 +123,7 @@ const openEditFormProfile = (id: number) => {
         @onEmitOpenNewFormProfile="openNewFormProfile"
         @onEmitSelectProfile="selectProfile"
         @onEmitOpenEditFormProfile="openEditFormProfile"
+        :key="forceUpdateKey"
       />
     </v-main>
   </v-app>

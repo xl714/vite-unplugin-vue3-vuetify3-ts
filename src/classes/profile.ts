@@ -45,7 +45,7 @@ interface ProfileListManager {
   loadList(): Map<number, Profile>;
   getList(): Map<number, Profile>;
   getById(id: number): Profile | null;
-  saveProfile(p: Profile): boolean;
+  saveProfile(p: Profile): Profile;
   saveProfiles(): boolean;
   removeProfile(id: number): boolean;
   toString(): string;
@@ -95,7 +95,7 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
     console.log('profile.id', profile.id);
     this.profilesMap.set(profile.id, profile);
     this.saveProfiles();
-    return true;
+    return profile;
   }
   saveProfiles() {
     console.log('ProfileListManagerLocalStorage.saveProfiles');

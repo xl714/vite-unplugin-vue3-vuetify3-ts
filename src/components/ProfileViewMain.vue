@@ -6,7 +6,7 @@ export interface Props {
 const props = withDefaults(defineProps<Props>(), {
   profile: new Profile(),
 });
-console.log('Profile.vue props', props.profile.name);
+console.log('Profile.vue props.profile.name', props.profile.name);
 
 const emits = defineEmits<{
   (e: 'onEmitOpenEditFormProfile', id: number): void;
