@@ -24,8 +24,10 @@ let selectedProfile = computed(() => {
 
 const loadProfiles = onMounted(() => {
   profiles.value = profilesMngr.loadList();
-  console.log('loadProfiles profiles', profiles.toString());
-  if (!(profiles.value && profiles.size.value)) {
+  console.log('loadProfiles profiles', profilesMngr.toString());
+  if (profiles.value && profiles.value.size) {
+    openProfiles();
+  } else {
     showProfiles.value = false;
     showProfile.value = false;
     showFormProfile.value = true;
