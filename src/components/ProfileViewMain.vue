@@ -101,28 +101,28 @@ const switchLegend = () => {
               <date-picker-day :datePicked="datePicked"></date-picker-day>
             </v-row>
             <v-row justify="center">
-              <v-col cols="3" />
-              <v-col cols="6">
+              <v-col cols="7" />
+              <v-col cols="5">
                 <v-text-field
                   label="New weight:"
-                  v-model="targetWeight"
+                  class="input-weight"
+                  v-model="weight"
                   :prepend-icon="IconWeightKilogram"
                   type="number"
                 ></v-text-field>
               </v-col>
-              <v-col cols="3" />
             </v-row>
             <v-row justify="center">
-              <v-col cols="3" />
-              <v-col cols="6">
+              <v-col cols="7" />
+              <v-col cols="5">
                 <v-text-field
-                  label="New calories burned !"
-                  v-model="targetWeight"
+                  class="input-calories"
+                  label="Calories burned:"
+                  v-model="calories"
                   :prepend-icon="IconFire"
                   type="number"
                 ></v-text-field>
               </v-col>
-              <v-col cols="3" />
             </v-row>
           </v-container>
         </v-card-text>
@@ -139,3 +139,9 @@ const switchLegend = () => {
     </v-dialog>
   </v-container>
 </template>
+<style>
+.input-weight,
+.input-calories {
+  margin-left: 3px;
+}
+</style>

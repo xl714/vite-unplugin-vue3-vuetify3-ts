@@ -137,3 +137,12 @@ body {
   padding: 1rem 0;
 }
 </style>
+<style>
+.v3dp__popout,
+.v3dp__body,
+.v3dp__elements {
+  z-index: 999999999;
+  background-color: white;
+  opacity: 1;
+}
+</style>
