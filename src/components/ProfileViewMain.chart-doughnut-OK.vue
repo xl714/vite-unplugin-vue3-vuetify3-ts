@@ -21,6 +21,7 @@ const emitOpenEditFormProfile = () => {
 };
 
 /***************** CHART *****************/
+// https://morioh.com/p/26b87c91fc9c
 // https://codesandbox.io/s/demo-vue-chart-3-ugynm?file=/src/App.vue
 import { shuffle } from 'lodash';
 import { DoughnutChart, useDoughnutChart } from 'vue-chart-3';

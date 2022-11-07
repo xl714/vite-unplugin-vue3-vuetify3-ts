@@ -21,6 +21,7 @@ const emitOpenEditFormProfile = () => {
 };
 
 /***************** CHART *****************/
+// https://morioh.com/p/26b87c91fc9c
 import { computed } from 'vue';
 import { LineChart, useLineChart } from 'vue-chart-3';
 import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
