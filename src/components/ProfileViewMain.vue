@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Profile } from '../classes/profile';
-import { BarChart } from '../components/BarChart';
+// import Datepicker from 'vue3-datepicker';
+
 export interface Props {
   profile: Profile;
 }
@@ -8,6 +9,14 @@ const props = withDefaults(defineProps<Props>(), {
   profile: new Profile(),
 });
 console.log('Profile.vue props.profile.name', props.profile.name);
+
+let dialog: boolean = ref(true);
+let datePicked: Date = ref(new Date());
+// let picker: string = new Date(
+//   Date.now() - new Date().getTimezoneOffset() * 60000
+// )
+// .toISOString()
+// .substr(0, 10);
 
 const emits = defineEmits<{
   (e: 'onEmitOpenEditFormProfile', id: number): void;
@@ -21,7 +30,6 @@ const emitOpenEditFormProfile = () => {
 };
 
 /***************** CHART *****************/
-import { computed } from 'vue';
 import { LineChart, useLineChart } from 'vue-chart-3';
 import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
 Chart.register(...registerables);
@@ -46,7 +54,7 @@ const getData = computed<ChartData<'line'>>(() => ({
 const options = computed<ChartOptions<'line'>>(() => ({
   plugins: {
     legend: {
-      display: false,
+      display: true,
     },
   },
 }));
@@ -68,14 +76,10 @@ const switchLegend = () => {
         <div>PROFILE VIEW MAIN - {{ profile.name }}</div>
       </v-col>
       <v-col cols="3" class="text-left">
-        <v-btn
-          type="button"
-          @click="emitOpenEditFormProfile"
-          color="primary"
-          fab
-        >
+        <v-btn color="primary" @click="dialog = true"> <i-mdi:edit /> </v-btn>
+        <!-- <v-btn type="button" @click="emitOpenForm" color="primary" fab>
           <i-mdi:edit />
-        </v-btn>
+        </v-btn> -->
       </v-col>
     </v-row>
     <v-row>
@@ -83,5 +87,43 @@ const switchLegend = () => {
         <LineChart v-bind="lineChartProps" />
       </v-col>
     </v-row>
+
+    <v-dialog v-model="dialog" persistent>
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">Add data</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row justify="center">
+              <date-picker-day :datePicked="datePicked"></date-picker-day>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-text-field label="Legal first name*" required></v-text-field>
+              </v-col>
+              <v-col cols="4">
+                <v-text-field
+                  label="Legal middle name"
+                  hint="example of helper text only on focus"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="4">
+                <v-text-field label="Legal first name*" required></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
+            Close
+          </v-btn>
+          <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
+            Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>

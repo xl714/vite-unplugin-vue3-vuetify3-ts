@@ -4,10 +4,13 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    DatePicker: typeof import('./components/datatypes/DatePicker.vue')['default']
+    DatePickerDay: typeof import('./components/datatypes/DatePickerDay.vue')['default']
     Form: typeof import('./components/Form.vue')['default']
     FormProfile: typeof import('./components/FormProfile.vue')['default']
     Header: typeof import('./components/Header.vue')['default']
     'IMdi:account': typeof import('~icons/mdi/account')['default']
+    'IMdi:calendar': typeof import('~icons/mdi/calendar')['default']
     'IMdi:delete': typeof import('~icons/mdi/delete')['default']
     'IMdi:edit': typeof import('~icons/mdi/edit')['default']
     'IMdi:fire': typeof import('~icons/mdi/fire')['default']
