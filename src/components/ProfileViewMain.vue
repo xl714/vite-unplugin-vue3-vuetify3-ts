@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 console.log('Profile.vue props.profile.name', props.profile.name);
 
-let dialog: boolean = ref(true);
+let showDialogForm: boolean = ref(true);
 let datePicked: Date = ref(new Date());
 let weight: number | null = ref(null);
 let calories: number | null = ref(null);
@@ -45,6 +45,7 @@ const emitSaveProfileData = () => {
     weight.value,
     calories.value
   );
+  showDialogForm.value = false;
   console.log('ProfileViewMain emitSaveProfileData after emit');
 };
 
@@ -100,7 +101,9 @@ const switchLegend = () => {
         <div>PROFILE VIEW MAIN - {{ profile.name }}</div>
       </v-col>
       <v-col cols="3" class="text-left">
-        <v-btn color="primary" @click="dialog = true"> <i-mdi:edit /> </v-btn>
+        <v-btn color="primary" @click="showDialogForm = true">
+          <i-mdi:edit />
+        </v-btn>
         <!-- <v-btn type="button" @click="emitOpenForm" color="primary" fab>
           <i-mdi:edit />
         </v-btn> -->
@@ -112,7 +115,7 @@ const switchLegend = () => {
       </v-col>
     </v-row>
 
-    <v-dialog v-model="dialog" class="dialog-form-add-data" persistent>
+    <v-dialog v-model="showDialogForm" class="dialog-form-add-data" persistent>
       <v-card>
         <v-card-title>
           <span class="text-h2"

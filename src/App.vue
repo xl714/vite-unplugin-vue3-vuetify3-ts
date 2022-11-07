@@ -53,6 +53,15 @@ const saveProfileData = (
   calories: number
 ) => {
   console.log('saveProfileData:', id, date, weight, calories);
+  let profile = profilesMngr.getById(id);
+  if (weight) {
+    profile = profilesMngr.saveProfileData(profile, date, 'weight', weight);
+    console.log('profile.weightList', profile.weightList);
+  }
+  if (calories) {
+    profile = profilesMngr.saveProfileData(profile, date, 'calories', calories);
+    console.log('profile.burnedList', profile.burnedList);
+  }
 };
 
 const removeProfile = (id: number) => {
