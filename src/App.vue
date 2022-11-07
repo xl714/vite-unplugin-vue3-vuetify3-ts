@@ -23,16 +23,12 @@ let selectedProfile = computed(() => {
 });
 
 const loadProfiles = onMounted(() => {
-  console.log('mounted profiles', profiles);
-  console.log('mounted profiles.size', profiles.size);
   profiles.value = profilesMngr.loadList();
-  console.log('typeof profiles', typeof profiles);
-  console.log('typeof profiles.value', typeof profiles.value);
-  console.log('profiles.size', profiles.size);
-  console.log('profiles.value.size', profiles.value.size);
+  console.log('loadProfiles profiles', profiles.toString());
   if (!(profiles.value && profiles.size.value)) {
+    showProfiles.value = false;
+    showProfile.value = false;
     showFormProfile.value = true;
-    console.log('showFormProfile.value', showFormProfile.value);
   }
 });
 
@@ -42,8 +38,6 @@ const saveProfile = (id, name, startWeight, targetWeight) => {
   profilesMngr.saveProfile(profile);
   profiles.value = profilesMngr.getList();
   console.log(profilesMngr.toString());
-  console.log('typeof profiles.value', typeof profiles.value);
-  console.log('profiles.value.size', profiles.value.size);
   selectedProfileId.value = profile.id;
   showFormProfile.value = false;
   showProfiles.value = false;

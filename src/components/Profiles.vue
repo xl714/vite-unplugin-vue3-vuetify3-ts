@@ -8,7 +8,8 @@ const props = withDefaults(defineProps<Props>(), {
   selectedProfileId: null,
   profiles: Map | null,
 });
-console.log('profiles', props.profiles);
+console.log('Profiles.vue selectedProfileId', props.selectedProfileId);
+console.log('Profiles.vue profiles', props.profiles.value);
 
 const emits = defineEmits<{
   (e: 'onEmitSelectProfile', id: number): void;
@@ -55,8 +56,8 @@ const emitSelectProfile = (e) => {
         <i-park-plus-cross /> New profile
       </v-btn>
     </v-row>
-    <v-row dense>
-      <v-col v-for="[id, item] in profiles" :key="id">
+    <v-row>
+      <v-col v-for="[id, item] in props.profiles.value" :key="id">
         <v-card
           @click="emitSelectProfile"
           :class="props.selectedProfileId == item.id ? `selected` : ``"
@@ -65,7 +66,7 @@ const emitSelectProfile = (e) => {
           <i-mdi:account
             class="white--text align-end"
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-            height="200px"
+            height="100px"
           />
           <v-card-title>{{ item.name }}</v-card-title>
           <v-card-actions>
@@ -84,20 +85,13 @@ const emitSelectProfile = (e) => {
 </template>
 
 <style lang="scss" scoped>
-/*
 header {
   .v-card {
-    cursor: pointer;
     .v-avatar {
-      display: inline-flex;
     }
     .v-card-title {
-      display: inline-flex;
-      font-size: 0.9em;
     }
     .v-card-subtitle {
-      display: inline-flex;
-      font-size: 0.7em;
     }
   }
   .selected {
@@ -108,21 +102,5 @@ header {
     font-size: 2em;
     color: rgb(0, 120, 207);
   }
-  /*********
-  display: grid;
-  grid-template-columns: repeat(11, min-content);
-  grid-column-gap: 0.5rem;
-  justify-content: center;
-  svg {
-    align-self: center;
-    &:nth-child(even) {
-      font-size: 2em;
-    }
-    &:last-of-type {
-      color: rgb(0, 120, 207);
-    }
-  }
- 
 }
- */
 </style>
