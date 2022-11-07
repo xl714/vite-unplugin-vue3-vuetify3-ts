@@ -98,6 +98,7 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
     return profile;
   }
   saveProfiles() {
+    // https://www.typescriptlang.org/play?ts=4.8.4#code/MYGwhgzhAEAKBOB7AZgSxAU2gbwFDWgAcBXAIxFWGlQBMAuaAO2IFtSN5oAfJ4kEANz4iZClUZgWGBhAAu8VIwDmQgiXKVocsPFkB1DKiUALWQ2ZsO3Xv1UiNVWTqUZ9hk2d6XOPZreHAiIxy8MTAsojwABTCBLTmrOw+NiDQALwpADSxTJLSWvKKSunQAOQAUogYpdkEBNq6BkamCd4lABzttXVO8C5uzZ4WSSUA7ACMwgCUODmyxqgQAHS0JbR2BPOLSxJSJbsYG9Bbyw0DHiVnTR5HJ0u9-demJQ+uT7J2AL7CEQDKhcoSlEZmkAHyzOrQeCuYjwRjQAAGCBQ6Aw2HiABJsHdaJ9MrkpHQsXcDniCjpzi1iQtTr1KbIya96UTsTT7s43u5TJ9oJ8EV8hN9MLJoCw6ABZMCEAA8ww4+ORaEw4IyjAwAHdoJLCMChCwlhBXFFxvi1ZrFajjfiAEQADTAADdUBxrfjOviJlMpkJAsFEJgliBEEooixvbhhdBECVsJ89UtkJEAKJgYDGKJRB1gEDEDD4gDWGAAniDwdgCDlEABtQtFgC6JSzOcO0Fwn29Fd9EH9GEDwai5V+AHkAHIGgFKVDIItRRBe1tAA
     console.log('ProfileListManagerLocalStorage.saveProfiles');
     let o = {};
     this.profilesMap.forEach((value, key) => {
@@ -121,7 +122,7 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
     let str_ = '';
     // for (let [key, value] of this.profilesMap) {
     //   console.log(key + " = " + value);
-    //   }
+    // }
     this.profilesMap.forEach(function (v, k) {
       str_ += `\n  ${k}: ${v.toString()}`;
     });
