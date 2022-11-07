@@ -24,14 +24,15 @@ class Profile {
   }
 
   static fromObject = (o: object) => {
-    return new Profile(
-      o['id'],
-      o['name'],
-      o['startWeight'],
-      o['targetWeight'],
-      o['burnedList'],
-      o['weightList']
-    );
+    return Object.assign(new Profile(), o);
+    // return new Profile(
+    //   o['id'],
+    //   o['name'],
+    //   o['startWeight'],
+    //   o['targetWeight'],
+    //   o['burnedList'],
+    //   o['weightList']
+    // );
   };
 
   toString = () => {
@@ -56,7 +57,6 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
     this.profilesMap = profilesMap;
   }
   getById(id: number, defaultValue: Profile | null = null) {
-    console.log();
     if (this.profilesMap.has(id)) {
       return this.profilesMap.get(id);
     }
@@ -67,6 +67,7 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
     return this.profilesMap;
   }
   loadList() {
+    // https://www.cloudhadoop.com/2018/09/typescript-how-to-convert-map-tofrom.html
     console.log('ProfileListManagerLocalStorage.loadList');
     if (localStorage.getItem('profiles')) {
       try {
@@ -100,11 +101,12 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
     console.log('ProfileListManagerLocalStorage.saveProfiles');
     let o = {};
     this.profilesMap.forEach((value, key) => {
-      o[key] = value;
+      let { ...obj_ } = value;
+      o[key] = obj_;
     });
     const parsed = JSON.stringify(o);
     console.log('saveProfiles parsed', parsed);
-    //localStorage.setItem('profiles', parsed);
+    localStorage.setItem('profiles', parsed);
     return true;
   }
 
