@@ -12,8 +12,9 @@ console.log('Profiles.vue selectedProfileId', props.selectedProfileId);
 console.log('Profiles.vue profiles', props.profiles.value);
 
 const emits = defineEmits<{
-  (e: 'onEmitSelectProfile', id: number): void;
   (e: 'onEmitOpenNewFormProfile'): void;
+  (e: 'onEmitSelectProfile', id: number): void;
+  (e: 'onEmitOpenEditFormProfile', id: number): void;
 }>();
 
 const emitOpenNewFormProfile = () => {
@@ -22,60 +23,48 @@ const emitOpenNewFormProfile = () => {
   console.log('After onEmitOpenNewFormProfile');
 };
 
+const emitOpenEditFormProfile = (e) => {
+  let id = parseInt(e.currentTarget.getAttribute('data-id'));
+  console.log(`emitOpenEditFormProfile before emit (${id})`);
+  emits('onEmitOpenEditFormProfile', id);
+  console.log('emitOpenEditFormProfile after emit');
+};
 const emitSelectProfile = (e) => {
   let selectedId = parseInt(e.currentTarget.getAttribute('data-id'));
-  console.log('Before onEmitSelectProfile');
+  console.log(`emitSelectProfile before emit (${selectedId})`);
   emits('onEmitSelectProfile', selectedId);
   //props.selectedProfileId.value = parseInt(selectedId);
-  console.log('After onEmitSelectProfile');
+  console.log('emitSelectProfile after emit');
 };
 </script>
 
-<!-- <template>
-  <div v-for="[id, item] in profiles" :key="id">
-    <v-card
-      :data-id="item.id"
-      @click="emitSelectProfile"
-      :class="props.selectedProfileId == item.id ? `selected` : ``"
-      :outlined="props.selectedProfileId == item.id ? `outlined` : ``"
-      class="text-left"
-    >
-      <v-avatar class="m-1" size="150">
-        <i-mdi:account />{{ item.name }}
-      </v-avatar>
-      <v-card-title> </v-card-title>
-    </v-card>
-  </div>
-
-  
-</template> -->
 <template>
   <v-container fluid max-width="500">
     <v-row>
-      <v-btn @click="emitOpenNewFormProfile" block>
-        <i-park-plus-cross /> New profile
-      </v-btn>
+      <v-col>
+        <div class="text-h2">Profiles</div>
+      </v-col>
+      <v-col
+        ><v-btn @click="emitOpenNewFormProfile" block>
+          <i-park-plus-cross /> New profile
+        </v-btn>
+      </v-col>
     </v-row>
     <v-row>
       <v-col v-for="[id, item] in props.profiles.value" :key="id">
         <v-card
-          @click="emitSelectProfile"
           :class="props.selectedProfileId == item.id ? `selected` : ``"
           :outlined="props.selectedProfileId == item.id ? `outlined` : ``"
         >
-          <i-mdi:account
-            class="white--text align-end"
-            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-            height="100px"
-          />
+          <i-mdi:account class="white--text align-end" height="100px" />
           <v-card-title>{{ item.name }}</v-card-title>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn icon>
-              <i-mdi:account />
+            <v-btn text :data-id="item.id" @click="emitOpenEditFormProfile">
+              Edit
             </v-btn>
-            <v-btn icon>
-              <i-mdi:account />
+            <v-btn text :data-id="item.id" @click="emitSelectProfile">
+              Select
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -83,7 +72,11 @@ const emitSelectProfile = (e) => {
     </v-row>
   </v-container>
 </template>
-
+<!-- 
+<v-avatar class="m-1" size="150">
+  <i-mdi:account />{{ item.name }}
+</v-avatar>
+-->
 <style lang="scss" scoped>
 header {
   .v-card {

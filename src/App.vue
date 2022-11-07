@@ -68,10 +68,11 @@ const openNewFormProfile = () => {
 };
 
 const openEditFormProfile = (id: number) => {
-  console.log('openNewFormProfile');
+  console.log('openEditFormProfile');
   selectedProfileId.value = id;
-  showFormProfile.value = true;
+  showProfiles.value = false;
   showProfile.value = false;
+  showFormProfile.value = true;
 };
 </script>
 
@@ -93,8 +94,9 @@ const openEditFormProfile = (id: number) => {
         v-else-if="showProfiles"
         :profiles="profiles"
         :selectedProfileId="selectedProfileId"
-        @onEmitSelectProfile="selectProfile"
         @onEmitOpenNewFormProfile="openNewFormProfile"
+        @onEmitSelectProfile="selectProfile"
+        @onEmitOpenEditFormProfile="openEditFormProfile"
       />
     </v-main>
   </v-app>
