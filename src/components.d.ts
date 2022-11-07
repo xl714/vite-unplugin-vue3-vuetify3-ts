@@ -4,7 +4,6 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    DatePicker: typeof import('./components/datatypes/DatePicker.vue')['default']
     DatePickerDay: typeof import('./components/datatypes/DatePickerDay.vue')['default']
     Form: typeof import('./components/Form.vue')['default']
     FormProfile: typeof import('./components/FormProfile.vue')['default']

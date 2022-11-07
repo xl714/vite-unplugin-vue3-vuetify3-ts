@@ -46,6 +46,15 @@ const saveProfile = (id, name, startWeight, targetWeight) => {
   openProfileViewMain(profile.id);
 };
 
+const saveProfileData = (
+  id: number,
+  date: string,
+  weight: number,
+  calories
+) => {
+  console.log('saveProfileData:', id, date, weight, calories);
+};
+
 const removeProfile = (id: number) => {
   console.log('selectProfile', id);
   profilesMngr.removeProfile(id);
@@ -107,6 +116,7 @@ const openEditFormProfile = (id: number) => {
         v-if="showProfileViewMain"
         :profile="selectedProfile"
         @onEmitOpenEditFormProfile="openEditFormProfile"
+        @onEmitSaveProfileData="saveProfileData"
         :key="forceUpdateKey"
       />
       <FormProfile
@@ -144,5 +154,18 @@ body {
   z-index: 999999999;
   background-color: white;
   opacity: 1;
+}
+.dialog-form-add-data .c__inputs {
+  height: 350px;
+  /* border: 1px solid red; */
+}
+
+.dialog-form-add-data .c__inputs .v-row__numbers {
+  position: relative;
+  top: 150px;
+}
+.dialog-form-add-data .c__inputs .v-row__datepicker {
+  position: relative;
+  top: -80px;
 }
 </style>

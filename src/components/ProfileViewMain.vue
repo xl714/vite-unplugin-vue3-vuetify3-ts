@@ -14,14 +14,18 @@ console.log('Profile.vue props.profile.name', props.profile.name);
 
 let dialog: boolean = ref(true);
 let datePicked: Date = ref(new Date());
-// let picker: string = new Date(
-//   Date.now() - new Date().getTimezoneOffset() * 60000
-// )
-// .toISOString()
-// .substr(0, 10);
+let weight: number | null = ref(null);
+let calories: number | null = ref(null);
 
 const emits = defineEmits<{
   (e: 'onEmitOpenEditFormProfile', id: number): void;
+  (
+    e: 'onEmitSaveProfileData',
+    id: number,
+    date: string,
+    weight: number,
+    calories: number
+  ): void;
 }>();
 
 const emitOpenEditFormProfile = () => {
@@ -29,6 +33,19 @@ const emitOpenEditFormProfile = () => {
   console.log('emitOpenEditFormProfile before emit');
   emits('onEmitOpenEditFormProfile', parseInt(props.profile.id));
   console.log('emitOpenEditFormProfile after emit');
+};
+
+const emitSaveProfileData = () => {
+  //name.value && alert(`Hi ${name.value}`);
+  console.log('emitSaveProfileData before emit');
+  emits(
+    'onEmitSaveProfileData',
+    parseInt(props.profile.id),
+    datePicked,
+    weight.value,
+    calories.value
+  );
+  console.log('emitSaveProfileData after emit');
 };
 
 /***************** CHART *****************/
@@ -90,18 +107,17 @@ const switchLegend = () => {
       </v-col>
     </v-row>
 
-    <v-dialog v-model="dialog" persistent>
+    <v-dialog v-model="dialog" class="dialog-form-add-data" persistent>
       <v-card>
         <v-card-title>
-          <span class="text-h5">Add data</span>
+          <span class="text-h2"
+            >Add new weight and/or burned calories at date</span
+          >
         </v-card-title>
         <v-card-text>
-          <v-container>
-            <v-row justify="center">
-              <date-picker-day :datePicked="datePicked"></date-picker-day>
-            </v-row>
-            <v-row justify="center">
-              <v-col cols="7" />
+          <v-container class="c__inputs">
+            <v-row justify="center" class="v-row__numbers">
+              <v-col cols="1" />
               <v-col cols="5">
                 <v-text-field
                   label="New weight:"
@@ -111,9 +127,6 @@ const switchLegend = () => {
                   type="number"
                 ></v-text-field>
               </v-col>
-            </v-row>
-            <v-row justify="center">
-              <v-col cols="7" />
               <v-col cols="5">
                 <v-text-field
                   class="input-calories"
@@ -123,16 +136,27 @@ const switchLegend = () => {
                   type="number"
                 ></v-text-field>
               </v-col>
+              <v-col cols="1" />
+            </v-row>
+            <v-row justify="center" class="v-row__datepicker">
+              <v-col cols="3" />
+              <v-col cols="6">
+                <date-picker-day
+                  :datePicked="datePicked"
+                  class="dialog-date-picker"
+                ></date-picker-day>
+              </v-col>
+              <v-col cols="3" />
             </v-row>
           </v-container>
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
-            Close
-          </v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
+          <v-btn color="primary" variant="text" @click="emitSaveProfileData">
             Save
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" variant="text" @click="dialog = false">
+            Close
           </v-btn>
         </v-card-actions>
       </v-card>

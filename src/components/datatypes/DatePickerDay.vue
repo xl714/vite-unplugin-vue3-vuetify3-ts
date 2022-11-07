@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import Datepicker from 'vue3-datepicker';
 export interface Props {
+  class: string;
   datePicked: Date;
 }
 const props = withDefaults(defineProps<Props>(), {
+  class: 'date-picker-day',
   datePicked: new Date(),
 });
 console.log('Profile.vue props.datePicked', props.datePicked);
@@ -11,7 +13,9 @@ console.log('Profile.vue props.datePicked', props.datePicked);
 
 <template>
   <div
+    :class="class"
     class="
+      date-picker-day
       v-input v-input--horizontal v-input--density-default v-input--dirty
       v-text-field
     "
@@ -61,8 +65,7 @@ console.log('Profile.vue props.datePicked', props.datePicked);
             autofocus=""
             size="1"
             type="text"
-            id="input-datepicker"
-            class="v-field__input"
+            class="v-field__input input-date-picker-day"
           ></datepicker>
           <!---->
         </div>
