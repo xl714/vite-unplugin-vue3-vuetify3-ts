@@ -28,9 +28,7 @@ const loadProfiles = onMounted(() => {
   if (profiles.value && profiles.value.size) {
     openProfiles();
   } else {
-    showProfiles.value = false;
-    showProfile.value = false;
-    showFormProfile.value = true;
+    openNewFormProfile();
   }
 });
 
