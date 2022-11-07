@@ -48,6 +48,11 @@ const emitSaveProfileData = () => {
   console.log('emitSaveProfileData after emit');
 };
 
+const datePickedChanged = (date: Date) => {
+  console.log('ProfileViewMain datePickedChanged', date);
+  datePicked.value = date;
+};
+
 /***************** CHART *****************/
 import { LineChart, useLineChart } from 'vue-chart-3';
 import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
@@ -143,6 +148,7 @@ const switchLegend = () => {
               <v-col cols="6">
                 <date-picker-day
                   :datePicked="datePicked"
+                  @onEmitDatePickedChanged="datePickedChanged"
                   class="dialog-date-picker"
                 ></date-picker-day>
               </v-col>

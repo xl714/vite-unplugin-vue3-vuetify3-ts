@@ -8,7 +8,18 @@ const props = withDefaults(defineProps<Props>(), {
   class: 'date-picker-day',
   datePicked: new Date(),
 });
-console.log('Profile.vue props.datePicked', props.datePicked);
+
+let datePickedForModel: Date = ref(props.datePicked);
+
+const emits = defineEmits<{
+  (e: 'onEmitDatePickedChanged', date: Date): void;
+}>();
+
+const emitDatePickedChanged = (date: Date) => {
+  console.log('DatePickerDay emitDatePickedChanged before emit');
+  emits('onEmitDatePickedChanged', date);
+  console.log('DatePickerDay emitDatePickedChanged after emit');
+};
 </script>
 
 <template>
@@ -60,8 +71,10 @@ console.log('Profile.vue props.datePicked', props.datePicked);
           ><label class="v-label v-field-label" for="input-datepicker"
             >Date</label
           >
+          <!--v-model="datePickedForModel"-->
           <datepicker
-            v-model="datePicked"
+            @update:modelValue="emitDatePickedChanged"
+            v-model="datePickedForModel"
             autofocus=""
             size="1"
             type="text"
