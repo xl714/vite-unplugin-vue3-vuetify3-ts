@@ -21,40 +21,61 @@ const emitOpenEditFormProfile = () => {
 };
 
 /***************** CHART *****************/
-import { computed } from 'vue';
-import { LineChart, useLineChart } from 'vue-chart-3';
+// https://codesandbox.io/s/demo-vue-chart-3-ugynm?file=/src/App.vue
+import { shuffle } from 'lodash';
+import { DoughnutChart, useDoughnutChart } from 'vue-chart-3';
 import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
+import MyComponent from './MyComponent.vue';
+
 Chart.register(...registerables);
-const getData = computed<ChartData<'line'>>(() => ({
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+
+const dataValues = ref([30, 40, 60, 70, 5]);
+const dataLabels = ref(['Paris', 'Nîmes', 'Toulon', 'Perpignan', 'Autre']);
+const toggleLegend = ref(true);
+
+const testData = computed<ChartData<'doughnut'>>(() => ({
+  labels: dataLabels.value,
   datasets: [
     {
-      label: 'Bitcoin',
-      data: [65, 59, 80, 81, 56, 55, 40],
-      fill: false,
-      borderColor: '#4bc0c0',
-    },
-    {
-      label: 'Ethereum',
-      data: [28, 48, 40, 19, 86, 27, 90],
-      fill: false,
-      borderColor: '#565656',
+      data: dataValues.value,
+      backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED'],
     },
   ],
 }));
 
-const options = computed<ChartOptions<'line'>>(() => ({
+const options = computed<ChartOptions<'doughnut'>>(() => ({
+  scales: {
+    myScale: {
+      type: 'logarithmic',
+      position: toggleLegend.value ? 'left' : 'right',
+    },
+  },
   plugins: {
     legend: {
-      display: false,
+      position: toggleLegend.value ? 'top' : 'bottom',
+    },
+    title: {
+      display: true,
+      text: 'Chart.js Doughnut Chart',
     },
   },
 }));
 
-const { lineChartProps } = useLineChart({
+const { doughnutChartProps, doughnutChartRef } = useDoughnutChart({
+  chartData: testData,
   options,
-  chartData: getData,
 });
+
+let index = ref(20);
+
+const shuffleData = () => {
+  // dataValues.value = shuffle(dataValues.value);
+  dataValues.value.push(index.value);
+  dataLabels.value.push('Other' + index.value);
+  console.log(dataValues.value);
+  console.log(doughnutChartRef.value.chartInstance);
+  index.value++;
+};
 
 const switchLegend = () => {
   toggleLegend.value = !toggleLegend.value;
@@ -80,7 +101,7 @@ const switchLegend = () => {
     </v-row>
     <v-row>
       <v-col cols="12" class="">
-        <LineChart v-bind="lineChartProps" />
+        <DoughnutChart v-bind="doughnutChartProps" />
       </v-col>
     </v-row>
   </v-container>

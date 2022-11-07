@@ -14,6 +14,8 @@ declare module 'vue' {
     IParkPlusCross: typeof import('~icons/icon-park/plus-cross')['default']
     Profiles: typeof import('./components/Profiles.vue')['default']
     ProfileViewMain: typeof import('./components/ProfileViewMain.vue')['default']
+    'ProfileViewMain.chartDoughnutOK': typeof import('./components/ProfileViewMain.chart-doughnut-OK.vue')['default']
+    'ProfileViewMain.chartLineOK': typeof import('./components/ProfileViewMain.chart-line-OK.vue')['default']
   }
 }
 
