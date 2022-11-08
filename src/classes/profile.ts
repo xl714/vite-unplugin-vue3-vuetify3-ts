@@ -25,6 +25,15 @@ class Profile {
     this.weightList = weightList;
   }
 
+  loadData(plm: ProfileListManager) {
+    this.burnedList = this.getData(plm, 'burned');
+    this.weightList = this.getData(plm, 'weight');
+  }
+
+  getData(plm: ProfileListManager, datatype: string) {
+    return plm.getProfileData(this.id, datatype);
+  }
+
   static fromObject = (o: object) => {
     return Object.assign(new Profile(), o);
   };
@@ -46,10 +55,10 @@ interface ProfileListManager {
   saveProfileData(
     profile: Profile,
     date: Date,
-    datetype: string,
+    datatype: string,
     value: number
   ): Profile | null;
-  getProfileData(id: number, datetype: string): object;
+  getProfileData(id: number, datatype: string): object;
 }
 
 class ProfileListManagerLocalStorage implements ProfileListManager {
@@ -137,28 +146,28 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
   saveProfileData(
     profile: Profile,
     date: Date,
-    datetype: string,
+    datatype: string,
     value: number
   ) {
     let parsed = '{}';
     let timestamp = date.getTime() / 1000;
-    if (datetype == 'weight') {
+    if (datatype == 'weight') {
       profile.weightList[timestamp] = value;
       parsed = JSON.stringify(profile.weightList);
-    } else if (datetype == 'calories' || datetype == 'burned') {
+    } else if (datatype == 'calories' || datatype == 'burned') {
       profile.burnedList[timestamp] = value;
       parsed = JSON.stringify(profile.burnedList);
     } else {
       alert('saveProfileData error');
       return null;
     }
-    const key = `profile_${profile.id}_${datetype}`;
+    const key = `profile_${profile.id}_${datatype}`;
     console.log(`saveProfileData ${key} parsed`, parsed);
     localStorage.setItem(key, parsed);
     return profile;
   }
-  getProfileData(id: number, datetype: string) {
-    const key = `profile_${id}_${datetype}`;
+  getProfileData(id: number, datatype: string) {
+    const key = `profile_${id}_${datatype}`;
     const jsonStr = localStorage.getItem(key);
     const jsonObj = JSON.parse(jsonStr);
     return jsonObj;

@@ -39,7 +39,7 @@ const emitSelectProfile = (e) => {
 </script>
 
 <template>
-  <v-container fluid max-width="500">
+  <v-container>
     <header>
       <v-row class="mb-3">
         <v-col>
@@ -53,61 +53,58 @@ const emitSelectProfile = (e) => {
         </v-col>
       </v-row>
     </header>
-    <v-content>
-      <v-row>
-        <v-col v-for="[id, item] in props.profiles.value" :key="id" cols="3">
-          <v-card
-            :class="props.selectedProfileId == item.id ? `selected` : ``"
-            :outlined="props.selectedProfileId == item.id ? `outlined` : ``"
-            outlined
-            shaped
-          >
-            <v-list-item two-line>
-              <div>
-                <div class="text-overline mb-4"></div>
-                <v-list-item-title class="text-h5 mb-1">
-                  <i-mdi:account color="grey" /> {{ item.name }}
-                </v-list-item-title>
-                <v-list-item-subtitle
-                  >From {{ item.startWeight }} to
-                  {{ item.targetWeight }}</v-list-item-subtitle
-                >
-              </div>
-              <!-- <v-avatar class="m-1" size="80" color="grey">
+    <v-row>
+      <v-col v-for="[id, item] in props.profiles.value" :key="id" cols="3">
+        <v-card
+          :class="props.selectedProfileId == item.id ? `selected` : ``"
+          :outlined="props.selectedProfileId == item.id ? `outlined` : ``"
+          outlined
+          shaped
+        >
+          <v-list-item two-line>
+            <div>
+              <div class="text-overline mb-4"></div>
+              <v-list-item-title class="text-h5 mb-1">
+                <i-mdi:account color="grey" /> {{ item.name }}
+              </v-list-item-title>
+              <v-list-item-subtitle>
+                From {{ item.startWeight }} to {{ item.targetWeight }} Kg
+              </v-list-item-subtitle>
+            </div>
+            <!-- <v-avatar class="m-1" size="80" color="grey">
                 <i-mdi:account color="grey" />
               </v-avatar> -->
-            </v-list-item>
+          </v-list-item>
 
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                raised
-                :data-id="item.id"
-                @click="emitOpenEditFormProfile"
-                class="ma-2"
-                color="primary"
-                outlined
-              >
-                Edit
-                <i-mdi:edit dark />
-              </v-btn>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              raised
+              :data-id="item.id"
+              @click="emitOpenEditFormProfile"
+              class="ma-2"
+              color="primary"
+              outlined
+            >
+              Edit
+              <i-mdi:edit dark />
+            </v-btn>
 
-              <v-btn
-                raised
-                :data-id="item.id"
-                @click="emitSelectProfile"
-                class="ma-2"
-                color="primary"
-                dark
-              >
-                Select
-                <i-mdi:checkbox-marked-circle />
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-content>
+            <v-btn
+              raised
+              :data-id="item.id"
+              @click="emitSelectProfile"
+              class="ma-2"
+              color="primary"
+              dark
+            >
+              Select
+              <i-mdi:checkbox-marked-circle />
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 <!-- 
@@ -125,12 +122,9 @@ header {
     .v-card-subtitle {
     }
   }
-  .selected {
-    border: 1px solid gold;
-  }
   svg {
     align-self: center;
-    font-size: 2em;
+    font-size: 1em;
     color: rgb(0, 120, 207);
   }
 }

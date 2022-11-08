@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 console.log('Profile.vue props.profile.name', props.profile.name);
 
-let showDialogForm: boolean = ref(true);
+let showDialogForm: boolean = ref(false);
 let datePicked: Date = ref(new Date());
 let weight: number | null = ref(null);
 let calories: number | null = ref(null);
@@ -97,25 +97,27 @@ const switchLegend = () => {
 
 <template>
   <v-container>
-    <v-row>
-      <v-col cols="9" class="text-left">
-        <div>PROFILE VIEW MAIN - {{ profile.name }}</div>
-      </v-col>
-      <v-col cols="3" class="text-left">
-        <v-btn color="primary" @click="showDialogForm = true">
-          <i-mdi:edit /><i-mdi:weight /><i-mdi:fire />
-        </v-btn>
-        <!-- <v-btn type="button" @click="emitOpenForm" color="primary" fab>
+    <header>
+      <v-row class="mb-3">
+        <v-col>
+          <h2 class="text-h2">Dashboard {{ profile.name }}</h2>
+        </v-col>
+        <v-col />
+        <v-col>
+          <v-btn color="primary" @click="showDialogForm = true" block>
+            <i-mdi:edit />&nbsp;&nbsp;&nbsp;<i-mdi:weight /><i-mdi:fire />
+          </v-btn>
+          <!-- <v-btn type="button" @click="emitOpenForm" color="primary" fab>
           <i-mdi:edit />
         </v-btn> -->
-      </v-col>
-    </v-row>
+        </v-col>
+      </v-row>
+    </header>
     <v-row>
       <v-col cols="12" class="">
         <LineChart v-bind="lineChartProps" />
       </v-col>
     </v-row>
-
     <v-dialog v-model="showDialogForm" class="dialog-form-add-data" persistent>
       <v-card>
         <v-card-title>

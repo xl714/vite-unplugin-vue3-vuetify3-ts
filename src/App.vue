@@ -23,7 +23,11 @@ let selectedProfile = computed(() => {
   console.log(
     `computed selectedProfile forceUpdateKey.value: ${forceUpdateKey.value}`
   );
-  return profilesMngr.getById(selectedProfileId.value, new Profile());
+  let profile = profilesMngr.getById(selectedProfileId.value, new Profile());
+  profile.loadData(profilesMngr);
+  console.log('profile.burnedList', profile.burnedList);
+  console.log('profile.weightList', profile.weightList);
+  return profile;
 });
 
 const loadProfiles = onMounted(() => {
@@ -148,14 +152,13 @@ const openEditFormProfile = (id: number) => {
   </v-app>
 </template>
 <style scoped>
+/*
 html,
 body {
   margin-top: 0px !important;
 }
-body {
-  margin-top: 30px !important;
-}
 .v-main {
   padding: 1rem 0;
 }
+*/
 </style>
