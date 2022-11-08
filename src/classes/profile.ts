@@ -5,8 +5,8 @@ class Profile {
   public targetWeight: number | null;
   // public burnedList: { timestamp: number; calories: number }[] | null ;
   // public burnedList: Array<{ timestamp: number; calories: number }> | null;
-  public burnedList: object | null;
-  public weightList: object | null;
+  public burnedList: object;
+  public weightList: object;
 
   constructor(
     id: number | null = null,
@@ -14,15 +14,15 @@ class Profile {
     startWeight: number | null = 88,
     targetWeight: number | null = 71,
     // burnedList: Array<{ timestamp: number; calories: number }> | null = [],
-    burnedList: object | null = {},
-    weightList: object | null = {}
+    burnedList: object = {},
+    weightList: object = {}
   ) {
     this.id = id;
     this.name = name;
     this.startWeight = startWeight;
     this.targetWeight = targetWeight;
-    this.burnedList = burnedList;
-    this.weightList = weightList;
+    this.burnedList = burnedList ?? {};
+    this.weightList = weightList ?? {};
   }
 
   loadData(plm: ProfileListManager) {
@@ -39,7 +39,9 @@ class Profile {
   };
 
   toString = () => {
-    return `Profile{id:${this.id}, name:${this.name}, startWeight:${this.startWeight}, targetWeight:${this.targetWeight} }`;
+    const weightListStr = JSON.stringify(this.weightList);
+    const burnedListStr = JSON.stringify(this.burnedList);
+    return `  Profile{\n  id:${this.id}, name:${this.name}, startWeight:${this.startWeight}, targetWeight:${this.targetWeight}\n    weightList: ${weightListStr}\n    burnedList: ${burnedListStr}\n  }`;
   };
 }
 
@@ -57,7 +59,7 @@ interface ProfileListManager {
     date: Date,
     datatype: string,
     value: number
-  ): Profile | null;
+  ): Profile;
   getProfileData(id: number, datatype: string): object;
 }
 
@@ -68,7 +70,11 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
   }
   getById(id: number, defaultValue: Profile | null = null) {
     if (this.profilesMap.has(id)) {
-      return this.profilesMap.get(id);
+      const profile = this.profilesMap.get(id);
+      profile.loadData(this);
+      console.log('getById this.profilesMap', this.profilesMap.toString());
+      console.log('getById profile', profile.toString());
+      return profile;
     }
     return defaultValue;
   }
@@ -155,11 +161,13 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
       profile.weightList[timestamp] = value;
       parsed = JSON.stringify(profile.weightList);
     } else if (datatype == 'calories' || datatype == 'burned') {
+      console.log('profile', profile.toString());
+      console.log('burnedList in profile', 'burnedList' in profile);
       profile.burnedList[timestamp] = value;
       parsed = JSON.stringify(profile.burnedList);
     } else {
       alert('saveProfileData error');
-      return null;
+      return new Profile();
     }
     const key = `profile_${profile.id}_${datatype}`;
     console.log(`saveProfileData ${key} parsed`, parsed);
@@ -170,7 +178,7 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
     const key = `profile_${id}_${datatype}`;
     const jsonStr = localStorage.getItem(key);
     const jsonObj = JSON.parse(jsonStr);
-    return jsonObj;
+    return jsonObj ?? {};
   }
 }
 

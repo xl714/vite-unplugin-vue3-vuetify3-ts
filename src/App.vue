@@ -59,10 +59,12 @@ const saveProfileData = (
   console.log('saveProfileData:', id, date, weight, calories);
   let profile = profilesMngr.getById(id);
   if (weight) {
+    console.log('App.vue NEXT: profilesMngr.saveProfileData weight');
     profile = profilesMngr.saveProfileData(profile, date, 'weight', weight);
     console.log('profile.weightList', profile.weightList);
   }
   if (calories) {
+    console.log('App.vue NEXT: profilesMngr.saveProfileData calories');
     profile = profilesMngr.saveProfileData(profile, date, 'calories', calories);
     console.log('profile.burnedList', profile.burnedList);
   }

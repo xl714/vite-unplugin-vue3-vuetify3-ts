@@ -17,6 +17,13 @@ let datePicked: Date = ref(new Date());
 let weight: number | null = ref(null);
 let calories: number | null = ref(null);
 
+const editDatumClick = (e) => {
+  const ts = parseInt(e.currentTarget.getAttribute('data-ts'));
+  const type = e.currentTarget.getAttribute('data-type');
+  const value = parseInt(e.currentTarget.getAttribute('data-value'));
+  console.log(`TODO editDatumClick before emit (${ts}, ${type}, ${value})`);
+};
+
 const emits = defineEmits<{
   (e: 'onEmitOpenEditFormProfile', id: number): void;
   (
@@ -29,14 +36,12 @@ const emits = defineEmits<{
 }>();
 
 const emitOpenEditFormProfile = () => {
-  //name.value && alert(`Hi ${name.value}`);
   console.log('emitOpenEditFormProfile before emit');
   emits('onEmitOpenEditFormProfile', parseInt(props.profile.id));
   console.log('emitOpenEditFormProfile after emit');
 };
 
 const emitSaveProfileData = () => {
-  //name.value && alert(`Hi ${name.value}`);
   console.log('ProfileViewMain emitSaveProfileData before emit');
   emits(
     'onEmitSaveProfileData',
@@ -113,11 +118,84 @@ const switchLegend = () => {
         </v-col>
       </v-row>
     </header>
+    <!-- TABLE BURNED CALORIES -->
+    <v-row>
+      <v-col cols="5">
+        <h3>Calories burned</h3>
+        <table class="v-simple-table dense">
+          <!-- <template v-slot:default> -->
+          <thead>
+            <tr>
+              <th class="text-center">Date</th>
+              <th class="text-center">Value (Calories)</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(value, key) in profile.burnedList">
+              <td class="text-left">
+                {{ new Date(key * 1000).toISOString().split('T')[0] }}
+              </td>
+              <td class="text-right">
+                {{ value }}
+              </td>
+              <td class="text-right">
+                <v-btn
+                  :data-ts="key"
+                  data-type="burned"
+                  :data-value="value"
+                  fax
+                  @click="editDatumClick"
+                  ><i-mdi:edit
+                /></v-btn>
+              </td>
+            </tr>
+          </tbody>
+          <!-- </template> -->
+        </table>
+      </v-col>
+      <v-col cols="2"></v-col>
+      <!-- TABLE WEIGHTS -->
+      <v-col cols="5">
+        <h3>Weights</h3>
+        <table class="v-simple-table dense">
+          <!-- <template v-slot:default> -->
+          <thead>
+            <tr>
+              <th class="text-center">Date</th>
+              <th class="text-center">Value (Kg)</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(value, key) in profile.weightList">
+              <td class="text-left">
+                {{ new Date(key * 1000).toISOString().split('T')[0] }}
+              </td>
+              <td class="text-left">{{ value }}</td>
+              <td class="text-right">
+                <v-btn
+                  :data-ts="key"
+                  data-type="weight"
+                  :data-value="value"
+                  fax
+                  @click="editDatumClick"
+                  ><i-mdi:edit
+                /></v-btn>
+              </td>
+            </tr>
+          </tbody>
+          <!-- </template> -->
+        </table>
+      </v-col>
+    </v-row>
     <v-row>
       <v-col cols="12" class="">
         <LineChart v-bind="lineChartProps" />
       </v-col>
     </v-row>
+
+    <!-- DIALOG FORM -->
     <v-dialog v-model="showDialogForm" class="dialog-form-add-data" persistent>
       <v-card>
         <v-card-title>

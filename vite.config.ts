@@ -18,6 +18,13 @@ export default defineConfig({
   plugins: [
     Vue({
       include: [/\.vue$/, /\.md$/],
+      // https://vuejs.org/api/application.html#app-config-compileroptions
+      // template: {
+      //   compilerOptions: {
+      //     isCustomElement: (tag) => ['v-simple-table'].includes(tag),
+      //     // isCustomElement: (tag) => { return tag.startsWith('ion-') },
+      //   },
+      // },
     }),
 
     // https://github.com/vuetifyjs/vuetify-loader
