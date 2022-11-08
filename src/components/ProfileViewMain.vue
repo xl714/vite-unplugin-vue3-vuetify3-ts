@@ -20,6 +20,78 @@ let chartLabels: Array<string> = ref(['aa', 'bb', 'cc']);
 let chartValuesWeight: Array<number> = ref([25, 85, 89]);
 let chartValuesBurned: Array<number> = ref([100, 200, 600]);
 
+const onMountedComputeChartData = onMounted(() => {
+  console.log('onMountedComputeChartData');
+  computeChartData();
+  return true;
+});
+
+const computeChartData = () => {
+  console.log(`computeChartData`);
+  console.log(
+    'Profile.vue computeChartData props.profile.name',
+    props.profile.name
+  );
+  console.log(
+    'Profile.vue computeChartData props.profile.toString',
+    props.profile.toString()
+  );
+  let weightTsAr = Object.keys(props.profile.weightList).map((i) =>
+    parseInt(i)
+  );
+  let burnedTsAr = Object.keys(props.profile.burnedList).map((i) =>
+    parseInt(i)
+  );
+  console.log('weightTsAr', weightTsAr, 'burnedTsAr', burnedTsAr);
+  let weightTsArReadable = Object.keys(props.profile.weightList).map(
+    (i) => new Date(parseInt(i) * 1000).toISOString().split('T')[0]
+  );
+  let burnedTsArReadable = Object.keys(props.profile.burnedList).map(
+    (i) => new Date(parseInt(i) * 1000).toISOString().split('T')[0]
+  );
+  let tsArray = weightTsAr.concat(burnedTsAr);
+  console.log('tsArray', tsArray);
+
+  // const reducer = (accumulator, currentValue) => (currentValue > accumulator) ? currentValue : accumulator;
+  // const max = tsArray.reduce(reducer, 0);
+  let max = Math.max(...tsArray);
+  let min = Math.min(...tsArray);
+  console.log(
+    'min:',
+    min,
+    new Date(min * 1000).toISOString().split('T')[0],
+    'max:',
+    max,
+    new Date(max * 1000).toISOString().split('T')[0]
+  );
+
+  let secondsInDay = 24 * 60 * 60;
+  let chartLabelsReadable = [];
+  let chartWeightAr = [];
+  let chartBurnedAr = [];
+  for (let i = min; i <= max; i += secondsInDay) {
+    let readableDate = new Date(i * 1000).toISOString().split('T')[0];
+    console.log(i, readableDate);
+    chartLabelsReadable.push(readableDate);
+    chartWeightAr.push(i in weightTsAr ? weightTsAr[i] : null);
+    chartBurnedAr.push(i in burnedTsAr ? burnedTsAr[i] : null);
+  }
+  console.log('chartLabels', chartLabels);
+  console.log('chartWeightAr', chartWeightAr);
+  console.log('chartBurnedAr', chartBurnedAr);
+  console.log(
+    'weightTsArReadable',
+    weightTsArReadable,
+    'burnedTsArReadable',
+    burnedTsArReadable
+  );
+  chartLabels.value = chartLabelsReadable;
+  chartValuesWeight.value = chartWeightAr;
+  chartValuesBurned.value = chartBurnedAr;
+
+  return new Date();
+};
+
 const editDatumClick = (e) => {
   const ts = parseInt(e.currentTarget.getAttribute('data-ts'));
   const type = e.currentTarget.getAttribute('data-type');
