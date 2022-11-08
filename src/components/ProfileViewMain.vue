@@ -16,9 +16,9 @@ let showDialogForm: boolean = ref(false);
 let datePicked: Date = ref(new Date());
 let weight: number | null = ref(null);
 let calories: number | null = ref(null);
-let chartLabels: Array<string> = ref(['aa', 'bb', 'cc']);
-let chartValuesWeight: Array<number> = ref([25, 85, 89]);
-let chartValuesBurned: Array<number> = ref([100, 200, 600]);
+let chartLabels: Array<string> = ref([]);
+let chartValuesWeight: Array<number> = ref([]);
+let chartValuesBurned: Array<number> = ref([]);
 
 const onMountedComputeChartData = onMounted(() => {
   console.log('onMountedComputeChartData');
@@ -29,12 +29,10 @@ const onMountedComputeChartData = onMounted(() => {
 const computeChartData = () => {
   console.log(`computeChartData`);
   console.log(
-    'Profile.vue computeChartData props.profile.name',
-    props.profile.name
+    `Profile.vue computeChartData props.profile.name: ${props.profile.name}`
   );
   console.log(
-    'Profile.vue computeChartData props.profile.toString',
-    props.profile.toString()
+    `Profile.vue computeChartData props.profile: ${props.profile.toString()}`
   );
   let weightTsAr = Object.keys(props.profile.weightList).map((i) =>
     parseInt(i)
@@ -43,6 +41,10 @@ const computeChartData = () => {
     parseInt(i)
   );
   console.log('weightTsAr', weightTsAr, 'burnedTsAr', burnedTsAr);
+  if (!(weightTsAr.length > 0 && burnedTsAr.length)) {
+    console.log('data not found');
+    return new Date();
+  }
   let weightTsArReadable = Object.keys(props.profile.weightList).map(
     (i) => new Date(parseInt(i) * 1000).toISOString().split('T')[0]
   );
@@ -194,6 +196,7 @@ const options = computed<ChartOptions<'line'>>(() => ({
       display: true,
     },
   },
+  spanGaps: true,
 }));
 
 const { lineChartProps } = useLineChart({
