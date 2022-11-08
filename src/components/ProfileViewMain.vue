@@ -16,6 +16,9 @@ let showDialogForm: boolean = ref(false);
 let datePicked: Date = ref(new Date());
 let weight: number | null = ref(null);
 let calories: number | null = ref(null);
+let chartLabels: Array<string> = ref(['aa', 'bb', 'cc']);
+let chartValuesWeight: Array<number> = ref([25, 85, 89]);
+let chartValuesBurned: Array<number> = ref([100, 200, 600]);
 
 const editDatumClick = (e) => {
   const ts = parseInt(e.currentTarget.getAttribute('data-ts'));
@@ -52,6 +55,8 @@ const emitSaveProfileData = () => {
   );
   showDialogForm.value = false;
   datePicked.value = new Date();
+  weight.value = null;
+  calories.value = null;
   console.log('ProfileViewMain emitSaveProfileData after emit');
 };
 
@@ -65,19 +70,22 @@ import { LineChart, useLineChart } from 'vue-chart-3';
 import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
 Chart.register(...registerables);
 const getData = computed<ChartData<'line'>>(() => ({
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  // labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  labels: chartLabels.value,
   datasets: [
     {
-      label: 'Bitcoin',
-      data: [65, 59, 80, 81, 56, 55, 40],
+      label: 'Weight',
+      //data: [65, 59, 80, 81, 56, 55, 40],
+      data: chartValuesWeight.value,
       fill: false,
       borderColor: '#4bc0c0',
     },
     {
-      label: 'Ethereum',
-      data: [28, 48, 40, 19, 86, 27, 90],
-      fill: false,
-      borderColor: '#565656',
+      label: 'Burned calories',
+      // data: [28, 48, 40, 19, 86, 27, 90],
+      data: chartValuesBurned.value,
+      fill: true,
+      borderColor: '#eb4034',
     },
   ],
 }));
@@ -120,14 +128,14 @@ const switchLegend = () => {
     </header>
     <!-- TABLE BURNED CALORIES -->
     <v-row>
-      <v-col cols="5">
-        <h3>Calories burned</h3>
+      <v-col cols="6" class="text-center">
+        <h3 class="text-center">Calories burned</h3>
         <table class="v-simple-table dense">
           <!-- <template v-slot:default> -->
           <thead>
             <tr>
               <th class="text-center">Date</th>
-              <th class="text-center">Value (Calories)</th>
+              <th class="text-center">Value</th>
               <th class="text-center">Actions</th>
             </tr>
           </thead>
@@ -136,9 +144,7 @@ const switchLegend = () => {
               <td class="text-left">
                 {{ new Date(key * 1000).toISOString().split('T')[0] }}
               </td>
-              <td class="text-right">
-                {{ value }}
-              </td>
+              <td class="text-right">{{ value }} Calories</td>
               <td class="text-right">
                 <v-btn
                   :data-ts="key"
@@ -154,10 +160,9 @@ const switchLegend = () => {
           <!-- </template> -->
         </table>
       </v-col>
-      <v-col cols="2"></v-col>
       <!-- TABLE WEIGHTS -->
-      <v-col cols="5">
-        <h3>Weights</h3>
+      <v-col cols="6" class="text-center">
+        <h3 class="text-center">Weights</h3>
         <table class="v-simple-table dense">
           <!-- <template v-slot:default> -->
           <thead>
@@ -253,7 +258,20 @@ const switchLegend = () => {
     </v-dialog>
   </v-container>
 </template>
-<style>
+<style scoped>
+.text-center {
+  text-align: center;
+}
+table {
+  width: 100%;
+  border: 1px solid silver;
+}
+table tbody {
+  border-top: 1px solid silver;
+}
+table tbody tr td {
+  padding: 5px;
+}
 .input-weight,
 .input-calories {
   margin-left: 3px;
