@@ -152,29 +152,10 @@ html,
 body {
   margin-top: 0px !important;
 }
+body {
+  margin-top: 30px !important;
+}
 .v-main {
   padding: 1rem 0;
-}
-</style>
-<style>
-.v3dp__popout,
-.v3dp__body,
-.v3dp__elements {
-  z-index: 999999999;
-  background-color: white;
-  opacity: 1;
-}
-.dialog-form-add-data .c__inputs {
-  height: 350px;
-  /* border: 1px solid red; */
-}
-
-.dialog-form-add-data .c__inputs .v-row__numbers {
-  position: relative;
-  top: 150px;
-}
-.dialog-form-add-data .c__inputs .v-row__datepicker {
-  position: relative;
-  top: -80px;
 }
 </style>

@@ -40,53 +40,74 @@ const emitSelectProfile = (e) => {
 
 <template>
   <v-container fluid max-width="500">
-    <v-row class="mb-3">
-      <v-col>
-        <header class="text-h2"><h2>Profiles</h2></header>
-      </v-col>
-      <v-col
-        ><v-btn @click="emitOpenNewFormProfile" block>
-          <i-park-plus-cross /> &nbsp; New profile
-        </v-btn>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col v-for="[id, item] in props.profiles.value" :key="id" cols="4">
-        <v-card
-          :class="props.selectedProfileId == item.id ? `selected` : ``"
-          :outlined="props.selectedProfileId == item.id ? `outlined` : ``"
-          outlined
-          shaped
-        >
-          <v-list-item three-line>
-            <div>
-              <div class="text-overline mb-4">Profile</div>
-              <v-list-item-title class="text-h5 mb-1">
-                {{ item.name }}
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >From {{ item.startWeight }} to
-                {{ item.targetWeight }}</v-list-item-subtitle
+    <header>
+      <v-row class="mb-3">
+        <v-col>
+          <h2 class="text-h2">Profiles</h2>
+        </v-col>
+        <v-col />
+        <v-col>
+          <v-btn @click="emitOpenNewFormProfile" block>
+            <i-park-plus-cross small /> &nbsp; New profile
+          </v-btn>
+        </v-col>
+      </v-row>
+    </header>
+    <v-content>
+      <v-row>
+        <v-col v-for="[id, item] in props.profiles.value" :key="id" cols="3">
+          <v-card
+            :class="props.selectedProfileId == item.id ? `selected` : ``"
+            :outlined="props.selectedProfileId == item.id ? `outlined` : ``"
+            outlined
+            shaped
+          >
+            <v-list-item two-line>
+              <div>
+                <div class="text-overline mb-4"></div>
+                <v-list-item-title class="text-h5 mb-1">
+                  <i-mdi:account color="grey" /> {{ item.name }}
+                </v-list-item-title>
+                <v-list-item-subtitle
+                  >From {{ item.startWeight }} to
+                  {{ item.targetWeight }}</v-list-item-subtitle
+                >
+              </div>
+              <!-- <v-avatar class="m-1" size="80" color="grey">
+                <i-mdi:account color="grey" />
+              </v-avatar> -->
+            </v-list-item>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                raised
+                :data-id="item.id"
+                @click="emitOpenEditFormProfile"
+                class="ma-2"
+                color="primary"
+                outlined
               >
-            </div>
+                Edit
+                <i-mdi:edit dark />
+              </v-btn>
 
-            <v-avatar class="m-1" size="80" color="grey">
-              <i-mdi:account />
-            </v-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn text :data-id="item.id" @click="emitOpenEditFormProfile">
-              Edit
-            </v-btn>
-            <v-btn text :data-id="item.id" @click="emitSelectProfile">
-              Select
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
+              <v-btn
+                raised
+                :data-id="item.id"
+                @click="emitSelectProfile"
+                class="ma-2"
+                color="primary"
+                dark
+              >
+                Select
+                <i-mdi:checkbox-marked-circle />
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-content>
   </v-container>
 </template>
 <!-- 

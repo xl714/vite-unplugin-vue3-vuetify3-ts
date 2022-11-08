@@ -46,6 +46,7 @@ const emitSaveProfileData = () => {
     calories.value
   );
   showDialogForm.value = false;
+  datePicked.value = new Date();
   console.log('ProfileViewMain emitSaveProfileData after emit');
 };
 
@@ -102,7 +103,7 @@ const switchLegend = () => {
       </v-col>
       <v-col cols="3" class="text-left">
         <v-btn color="primary" @click="showDialogForm = true">
-          <i-mdi:edit />
+          <i-mdi:edit /><i-mdi:weight /><i-mdi:fire />
         </v-btn>
         <!-- <v-btn type="button" @click="emitOpenForm" color="primary" fab>
           <i-mdi:edit />
@@ -164,7 +165,7 @@ const switchLegend = () => {
             Save
           </v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="primary" variant="text" @click="dialog = false">
+          <v-btn color="primary" variant="text" @click="showDialogForm = false">
             Close
           </v-btn>
         </v-card-actions>
