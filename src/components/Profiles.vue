@@ -42,22 +42,21 @@ const emitSelectProfile = (e) => {
   <v-container fluid max-width="500">
     <v-row class="mb-3">
       <v-col>
-        <div class="text-h2">Profiles</div>
+        <header class="text-h2"><h2>Profiles</h2></header>
       </v-col>
       <v-col
         ><v-btn @click="emitOpenNewFormProfile" block>
-          <i-park-plus-cross /> New profile
+          <i-park-plus-cross /> &nbsp; New profile
         </v-btn>
       </v-col>
     </v-row>
     <v-row>
-      <v-col v-for="[id, item] in props.profiles.value" :key="id">
+      <v-col v-for="[id, item] in props.profiles.value" :key="id" cols="4">
         <v-card
           :class="props.selectedProfileId == item.id ? `selected` : ``"
           :outlined="props.selectedProfileId == item.id ? `outlined` : ``"
-          class="ma-5"
-          max-width="400"
           outlined
+          shaped
         >
           <v-list-item three-line>
             <div>
