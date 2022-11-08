@@ -73,8 +73,12 @@ const computeChartData = () => {
     let readableDate = new Date(i * 1000).toISOString().split('T')[0];
     console.log(i, readableDate);
     chartLabelsReadable.push(readableDate);
-    chartWeightAr.push(i in weightTsAr ? weightTsAr[i] : null);
-    chartBurnedAr.push(i in burnedTsAr ? burnedTsAr[i] : null);
+    chartWeightAr.push(
+      i in props.profile.weightList ? props.profile.weightList[i] : null
+    );
+    chartBurnedAr.push(
+      i in props.profile.burnedList ? props.profile.burnedList[i] : null
+    );
   }
   console.log('chartLabels', chartLabels);
   console.log('chartWeightAr', chartWeightAr);
