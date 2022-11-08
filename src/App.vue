@@ -60,12 +60,17 @@ const saveProfileData = (
   let profile = profilesMngr.getById(id);
   if (weight) {
     console.log('App.vue NEXT: profilesMngr.saveProfileData weight');
-    profile = profilesMngr.saveProfileData(profile, date, 'weight', weight);
+    profile = profilesMngr.saveProfileDatum(profile, date, 'weight', weight);
     console.log('profile.weightList', profile.weightList);
   }
   if (calories) {
     console.log('App.vue NEXT: profilesMngr.saveProfileData calories');
-    profile = profilesMngr.saveProfileData(profile, date, 'calories', calories);
+    profile = profilesMngr.saveProfileDatum(
+      profile,
+      date,
+      'calories',
+      calories
+    );
     console.log('profile.burnedList', profile.burnedList);
   }
 };
@@ -75,11 +80,13 @@ const removeProfileDatum = (
   datatype: string,
   timestamp: number
 ) => {
+  console.log('saveProfileData:', id, datatype, timestamp);
   let profile = profilesMngr.getById(id);
   profile = profilesMngr.removeProfileDatum(profile, datatype, timestamp);
   console.log(
     `App.vue removeProfileDatum profile.toString: ${profile.toString()}`
   );
+  openProfileViewMain(profile.id);
 };
 
 const removeProfile = (id: number) => {

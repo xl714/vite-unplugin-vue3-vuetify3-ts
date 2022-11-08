@@ -54,11 +54,16 @@ interface ProfileListManager {
   saveProfiles(): boolean;
   removeProfile(id: number): boolean;
   toString(): string;
-  saveProfileData(
+  saveProfileDatum(
     profile: Profile,
     date: Date,
     datatype: string,
     value: number
+  ): Profile;
+  removeProfileDatum(
+    profile: Profile,
+    datatype: string,
+    timestamp: number
   ): Profile;
   getProfileData(id: number, datatype: string): object;
 }
@@ -149,7 +154,7 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
     return str_;
   }
 
-  saveProfileData(
+  saveProfileDatum(
     profile: Profile,
     date: Date,
     datatype: string,
@@ -174,6 +179,27 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
     localStorage.setItem(key, parsed);
     return profile;
   }
+  removeProfileDatum = (
+    profile: Profile,
+    datatype: string,
+    timestamp: number
+  ) => {
+    let parsed = '{}';
+    if (datatype == 'weight') {
+      delete profile.weightList[timestamp];
+      parsed = JSON.stringify(profile.weightList);
+    } else if (datatype == 'calories' || datatype == 'burned') {
+      delete profile.burnedList[timestamp];
+      parsed = JSON.stringify(profile.burnedList);
+    } else {
+      alert('saveProfileData error');
+      return new Profile();
+    }
+    const key = `profile_${profile.id}_${datatype}`;
+    console.log(`saveProfileData ${key} parsed`, parsed);
+    localStorage.setItem(key, parsed);
+    return profile;
+  };
   getProfileData(id: number, datatype: string) {
     const key = `profile_${id}_${datatype}`;
     const jsonStr = localStorage.getItem(key);
