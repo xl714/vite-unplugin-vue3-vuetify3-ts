@@ -174,8 +174,9 @@ const switchLegend = () => {
                   :data-value="value"
                   fax
                   @click="removeDatumClick"
-                  ><i-mdi:delete
-                /></v-btn>
+                >
+                  <i-mdi:delete />
+                </v-btn>
               </td>
             </tr>
           </tbody>
@@ -190,7 +191,7 @@ const switchLegend = () => {
           <thead>
             <tr>
               <th class="text-center">Date</th>
-              <th class="text-center">Value (Kg)</th>
+              <th class="text-center">Value</th>
               <th class="text-center">Actions</th>
             </tr>
           </thead>
@@ -199,7 +200,7 @@ const switchLegend = () => {
               <td class="text-left">
                 {{ new Date(key * 1000).toISOString().split('T')[0] }}
               </td>
-              <td class="text-left">{{ value }}</td>
+              <td class="text-left">{{ value }} Kg</td>
               <td class="text-right">
                 <v-btn
                   :data-ts="key"
@@ -207,8 +208,9 @@ const switchLegend = () => {
                   :data-value="value"
                   fax
                   @click="removeDatumClick"
-                  ><i-mdi:delete color="red"
-                /></v-btn>
+                >
+                  <i-mdi:delete />
+                </v-btn>
               </td>
             </tr>
           </tbody>

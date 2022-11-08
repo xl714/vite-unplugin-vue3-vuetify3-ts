@@ -166,6 +166,7 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
       profile.weightList[timestamp] = value;
       parsed = JSON.stringify(profile.weightList);
     } else if (datatype == 'calories' || datatype == 'burned') {
+      datatype = 'burned';
       console.log('profile', profile.toString());
       console.log('burnedList in profile', 'burnedList' in profile);
       profile.burnedList[timestamp] = value;
@@ -189,6 +190,7 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
       delete profile.weightList[timestamp];
       parsed = JSON.stringify(profile.weightList);
     } else if (datatype == 'calories' || datatype == 'burned') {
+      datatype = 'burned';
       delete profile.burnedList[timestamp];
       parsed = JSON.stringify(profile.burnedList);
     } else {
