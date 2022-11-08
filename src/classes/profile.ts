@@ -140,16 +140,18 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
     datetype: string,
     value: number
   ) {
+    let parsed = '{}';
     let timestamp = date.getTime() / 1000;
     if (datetype == 'weight') {
       profile.weightList[timestamp] = value;
+      parsed = JSON.stringify(profile.weightList);
     } else if (datetype == 'calories' || datetype == 'burned') {
       profile.burnedList[timestamp] = value;
+      parsed = JSON.stringify(profile.burnedList);
     } else {
       alert('saveProfileData error');
       return null;
     }
-    const parsed = JSON.stringify(profile.burnedList);
     const key = `profile_${profile.id}_${datetype}`;
     console.log(`saveProfileData ${key} parsed`, parsed);
     localStorage.setItem(key, parsed);
