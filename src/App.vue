@@ -70,6 +70,18 @@ const saveProfileData = (
   }
 };
 
+const removeProfileDatum = (
+  id: number,
+  datatype: string,
+  timestamp: number
+) => {
+  let profile = profilesMngr.getById(id);
+  profile = profilesMngr.removeProfileDatum(profile, datatype, timestamp);
+  console.log(
+    `App.vue removeProfileDatum profile.toString: ${profile.toString()}`
+  );
+};
+
 const removeProfile = (id: number) => {
   console.log('selectProfile', id);
   profilesMngr.removeProfile(id);
@@ -132,6 +144,7 @@ const openEditFormProfile = (id: number) => {
         :profile="selectedProfile"
         @onEmitOpenEditFormProfile="openEditFormProfile"
         @onEmitSaveProfileData="saveProfileData"
+        @onEmitRemoveProfileDatum="removeProfileDatum"
         :key="forceUpdateKey"
       />
       <FormProfile

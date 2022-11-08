@@ -27,6 +27,12 @@ const editDatumClick = (e) => {
   console.log(`TODO editDatumClick before emit (${ts}, ${type}, ${value})`);
 };
 
+const removeDatumClick = (e) => {
+  const datatype = e.currentTarget.getAttribute('data-type');
+  const timestamp = parseInt(e.currentTarget.getAttribute('data-ts'));
+  console.log(`Next: emitRemoveProfileDatum (${datatype}, ${timestamp})`);
+  emitRemoveProfileDatum(datatype, timestamp);
+};
 const emits = defineEmits<{
   (e: 'onEmitOpenEditFormProfile', id: number): void;
   (
@@ -36,8 +42,24 @@ const emits = defineEmits<{
     weight: number,
     calories: number
   ): void;
+  (
+    e: 'onEmitRemoveProfileDatum',
+    id: number,
+    datatype: string,
+    timestamp: number
+  ): void;
 }>();
 
+const emitRemoveProfileDatum = (datatype: string, timestamp: number) => {
+  console.log('emitRemoveProfileDatum before emit');
+  emits(
+    'onEmitRemoveProfileDatum',
+    parseInt(props.profile.id),
+    datatype,
+    timestamp
+  );
+  console.log('emitRemoveProfileDatum after emit');
+};
 const emitOpenEditFormProfile = () => {
   console.log('emitOpenEditFormProfile before emit');
   emits('onEmitOpenEditFormProfile', parseInt(props.profile.id));
@@ -151,8 +173,8 @@ const switchLegend = () => {
                   data-type="burned"
                   :data-value="value"
                   fax
-                  @click="editDatumClick"
-                  ><i-mdi:edit
+                  @click="removeDatumClick"
+                  ><i-mdi:delete
                 /></v-btn>
               </td>
             </tr>
@@ -184,8 +206,8 @@ const switchLegend = () => {
                   data-type="weight"
                   :data-value="value"
                   fax
-                  @click="editDatumClick"
-                  ><i-mdi:edit
+                  @click="removeDatumClick"
+                  ><i-mdi:delete color="red"
                 /></v-btn>
               </td>
             </tr>
