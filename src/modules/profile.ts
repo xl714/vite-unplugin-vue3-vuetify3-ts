@@ -113,7 +113,7 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
       let keys = [...Array.from(this.profilesMap.keys())];
       profile.id = keys.length > 0 ? Math.max(...keys) + 1 : 1;
       this.saveProfileDatum(profile, new Date(), 'weight', profile.startWeight);
-      this.saveProfileDatum(profile, new Date(), 'burned', 0);
+      //this.saveProfileDatum(profile, new Date(), 'burned', 0);
     }
     console.log('profile.id', profile.id);
     this.profilesMap.set(profile.id, profile);
@@ -163,6 +163,7 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
     value: number
   ) {
     let parsed = '{}';
+    date.setHours(0, 0, 0, 0);
     let timestamp = date.getTime() / 1000;
     if (datatype == 'weight') {
       profile.weightList[timestamp] = value;
