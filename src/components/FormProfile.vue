@@ -67,19 +67,23 @@ const emitRemoveProfile = () => {
 </script>
 
 <template>
-  <section>
-    <v-row>
-      <v-col cols="2" />
-      <v-col cols="6" class="text-left">
-        <header>
-          <h2>
+  <v-container>
+    <!-- HEADER -->
+    <header>
+      <v-row class="mb-3">
+        <v-col>
+          <h2 class="text-h2">
             {{ profile.id ? `` : `New ` }} Profile
-            {{ profile ? `Id:${profile.id}` : `` }}
+            {{ profile.id ? `Id:${profile.id}` : `` }}
           </h2>
-        </header></v-col
-      >
-      <v-col cols="2" />
-    </v-row>
+        </v-col>
+        <v-col>
+          <!-- here are action buttons-->
+        </v-col>
+      </v-row>
+    </header>
+
+    <!-- FORM -->
     <form @submit.prevent="emitSaveProfile">
       <v-text-field
         autofocus
@@ -102,19 +106,20 @@ const emitRemoveProfile = () => {
         type="number"
       ></v-text-field>
       <v-row>
-        <v-col cols="2" />
         <v-col cols="6" class="text-left">
           <v-btn
             type="submit"
             :disabled="disabled"
             variant="outlined"
             color="primary"
+            class="ml-5"
             text
+            block
           >
-            Save
+            Save new profile
           </v-btn>
         </v-col>
-        <v-col class="d-flex text-right" cols="2">
+        <v-col class="d-flex text-right" cols="6">
           <v-btn
             v-if="profile.id"
             @click="emitRemoveProfile"
@@ -129,7 +134,7 @@ const emitRemoveProfile = () => {
         </v-col>
       </v-row>
     </form>
-  </section>
+  </v-container>
 </template>
 
 <style scoped>

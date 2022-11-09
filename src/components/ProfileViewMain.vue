@@ -219,7 +219,7 @@ const switchLegend = () => {
         <v-col />
         <v-col>
           <v-btn color="primary" @click="showDialogForm = true" block>
-            <i-mdi:edit />&nbsp;&nbsp;&nbsp;<i-mdi:weight /><i-mdi:fire />
+            Add new &nbsp;<i-mdi:weight /> / <i-mdi:fire /> data
           </v-btn>
           <!-- <v-btn type="button" @click="emitOpenForm" color="primary" fab>
           <i-mdi:edit />

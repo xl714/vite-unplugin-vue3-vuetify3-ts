@@ -112,6 +112,8 @@ class ProfileListManagerLocalStorage implements ProfileListManager {
     if (!profile.id) {
       let keys = [...Array.from(this.profilesMap.keys())];
       profile.id = keys.length > 0 ? Math.max(...keys) + 1 : 1;
+      this.saveProfileDatum(profile, new Date(), 'weight', profile.startWeight);
+      this.saveProfileDatum(profile, new Date(), 'burned', 0);
     }
     console.log('profile.id', profile.id);
     this.profilesMap.set(profile.id, profile);
