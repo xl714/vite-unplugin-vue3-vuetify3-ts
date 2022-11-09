@@ -97,6 +97,7 @@ const emitRemoveProfileDatum = (datatype: string, timestamp: number) => {
     timestamp
   );
   console.log('emitRemoveProfileDatum after emit');
+  emitUpdateComponent();
 };
 const emitOpenEditFormProfile = () => {
   console.log('emitOpenEditFormProfile before emit');
@@ -118,6 +119,7 @@ const emitSaveProfileData = () => {
   weight.value = null;
   calories.value = null;
   console.log('ProfileViewMain emitSaveProfileData after emit');
+  emitUpdateComponent();
 };
 
 const datePickedChanged = (date: Date) => {
