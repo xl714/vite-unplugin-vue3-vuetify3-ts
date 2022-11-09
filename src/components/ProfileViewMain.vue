@@ -312,10 +312,9 @@ const switchLegend = () => {
           >
         </v-card-title>
         <v-card-text>
-          <v-container class="c__inputs">
+          <section class="c__inputs">
             <v-row justify="center" class="v-row__numbers">
-              <v-col cols="1" />
-              <v-col cols="5">
+              <v-col cols="6">
                 <v-text-field
                   label="New weight:"
                   class="input-weight"
@@ -324,7 +323,7 @@ const switchLegend = () => {
                   type="number"
                 ></v-text-field>
               </v-col>
-              <v-col cols="5">
+              <v-col cols="6">
                 <v-text-field
                   class="input-calories"
                   label="Calories burned:"
@@ -336,7 +335,6 @@ const switchLegend = () => {
               <v-col cols="1" />
             </v-row>
             <v-row justify="center" class="v-row__datepicker">
-              <v-col cols="3" />
               <v-col cols="6">
                 <date-picker-day
                   :datePicked="datePicked"
@@ -344,9 +342,9 @@ const switchLegend = () => {
                   class="dialog-date-picker"
                 ></date-picker-day>
               </v-col>
-              <v-col cols="3" />
+              <v-col cols="6" />
             </v-row>
-          </v-container>
+          </section>
         </v-card-text>
         <v-card-actions>
           <v-btn color="primary" variant="text" @click="emitSaveProfileData">
