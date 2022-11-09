@@ -111,6 +111,11 @@ const openProfileViewMain = (id: number) => {
   showProfileViewMain.value = true;
 };
 
+const updateComponentProfileViewMain = (id: number) => {
+  console.log(`updateComponentProfileViewMain(id:${id})`);
+  openProfileViewMain(id);
+};
+
 const openProfiles = () => {
   console.log('openProfiles');
   forceUpdateKey.value++;
@@ -152,6 +157,7 @@ const openEditFormProfile = (id: number) => {
         @onEmitOpenEditFormProfile="openEditFormProfile"
         @onEmitSaveProfileData="saveProfileData"
         @onEmitRemoveProfileDatum="removeProfileDatum"
+        @onEmitUpdateComponent="updateComponentProfileViewMain"
         :key="forceUpdateKey"
       />
       <FormProfile

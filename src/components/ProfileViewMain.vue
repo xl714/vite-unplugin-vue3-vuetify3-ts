@@ -112,6 +112,7 @@ const removeDatumClick = (e) => {
   emitRemoveProfileDatum(datatype, timestamp);
 };
 const emits = defineEmits<{
+  (e: 'onEmitUpdateComponent', id: number): void;
   (e: 'onEmitOpenEditFormProfile', id: number): void;
   (
     e: 'onEmitSaveProfileData',
@@ -127,6 +128,12 @@ const emits = defineEmits<{
     timestamp: number
   ): void;
 }>();
+
+const emitUpdateComponent = () => {
+  console.log('emitUpdateComponent before emit');
+  emits('onEmitUpdateComponent', parseInt(props.profile.id));
+  console.log('emitUpdateComponent after emit');
+};
 
 const emitRemoveProfileDatum = (datatype: string, timestamp: number) => {
   console.log('emitRemoveProfileDatum before emit');
@@ -214,7 +221,7 @@ const switchLegend = () => {
     <header>
       <v-row class="mb-3">
         <v-col>
-          <h2 class="text-h2">Dashboard {{ profile.name }}</h2>
+          <h2 class="text-h2">Dashboard</h2>
         </v-col>
         <v-col />
         <v-col>
@@ -227,6 +234,23 @@ const switchLegend = () => {
         </v-col>
       </v-row>
     </header>
+    <!-- CHART -->
+    <v-row>
+      <v-col cols="12" class="">
+        Starting Weight {{ profile.startWeight }}kg -
+        {{ profile.startWeight - profile.targetWeight }}kg =
+        {{ profile.targettWeight }}kg<br />
+        <br />
+        Total calories to burn:
+        {{ (profile.startWeight - profile.targetWeight) * 9000 }} Calories<br />
+        <br />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" class="">
+        <LineChart v-bind="lineChartProps" />
+      </v-col>
+    </v-row>
     <!-- TABLE BURNED CALORIES -->
     <v-row>
       <v-col cols="6" class="text-center">
@@ -297,11 +321,6 @@ const switchLegend = () => {
         </table>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="12" class="">
-        <LineChart v-bind="lineChartProps" />
-      </v-col>
-    </v-row>
 
     <!-- DIALOG FORM -->
     <v-dialog v-model="showDialogForm" class="dialog-form-add-data" persistent>
@@ -316,7 +335,7 @@ const switchLegend = () => {
             <v-row justify="center" class="v-row__numbers">
               <v-col cols="6">
                 <v-text-field
-                  label="New weight:"
+                  label="Weight:"
                   class="input-weight"
                   v-model="weight"
                   :prepend-icon="IconWeightKilogram"
