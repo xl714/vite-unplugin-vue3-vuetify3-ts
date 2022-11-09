@@ -112,7 +112,7 @@ const emitRemoveProfile = () => {
             :disabled="disabled"
             variant="outlined"
             color="primary"
-            class="ml-5"
+            class="ml-10"
             text
             block
           >

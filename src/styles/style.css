@@ -35,12 +35,48 @@ body {
   top: -80px;
 }
 
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+
 /******************************************/
 /*** generate vuetify spacing css class ***/
 /** https://jsfiddle.net/XL714/8azk46uw/ **/
 
 /* margin positive */
 
+.mt-0 {
+  top: 0px;
+}
+.ml-0 {
+  left: 0px;
+}
+.mb-0 {
+  bottom: 0px;
+}
+.mr-0 {
+  right: 0px;
+}
+.mx-0 {
+  left: 0px;
+  right: 0px;
+}
+.my-0 {
+  top: 0px;
+  bottom: 0px;
+}
+.ma-0 {
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
 .mt-1 {
   top: 4px;
 }
@@ -460,6 +496,32 @@ body {
 
 /* padding positive */
 
+.pt-0 {
+  top: 0px;
+}
+.pl-0 {
+  left: 0px;
+}
+.pb-0 {
+  bottom: 0px;
+}
+.pr-0 {
+  right: 0px;
+}
+.px-0 {
+  left: 0px;
+  right: 0px;
+}
+.py-0 {
+  top: 0px;
+  bottom: 0px;
+}
+.pa-0 {
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
 .pt-1 {
   top: 4px;
 }
@@ -879,6 +941,32 @@ body {
 
 /* margin negative */
 
+.mt-n0 {
+  top: 0px;
+}
+.ml-n0 {
+  left: 0px;
+}
+.mb-n0 {
+  bottom: 0px;
+}
+.mr-n0 {
+  right: 0px;
+}
+.mx-n0 {
+  left: 0px;
+  right: 0px;
+}
+.my-n0 {
+  top: 0px;
+  bottom: 0px;
+}
+.ma-n0 {
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
 .mt-n1 {
   top: 4px;
 }
@@ -1298,6 +1386,32 @@ body {
 
 /* padding negative */
 
+.pt-n0 {
+  top: 0px;
+}
+.pl-n0 {
+  left: 0px;
+}
+.pb-n0 {
+  bottom: 0px;
+}
+.pr-n0 {
+  right: 0px;
+}
+.px-n0 {
+  left: 0px;
+  right: 0px;
+}
+.py-n0 {
+  top: 0px;
+  bottom: 0px;
+}
+.pa-n0 {
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
 .pt-n1 {
   top: 4px;
 }
