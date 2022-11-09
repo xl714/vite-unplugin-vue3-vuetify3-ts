@@ -1,3 +1,5 @@
+import '@/styles/vuetify-missing-spacers.css';
+import '@/styles/vuetify-missing-other-styles.css';
 import '@/styles/style.css';
 import '@/styles/vuetify.scss';
 

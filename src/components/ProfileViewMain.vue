@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Profile } from '../classes/profile';
+import { Profile } from '../modules/profile';
+import { computeChartData } from '../modules/computeChartData';
 import IconWeightKilogram from '~icons/mdi/weight-kilogram';
 import IconFire from '~icons/mdi/fire';
 // import Datepicker from 'vue3-datepicker';
@@ -20,83 +21,35 @@ let chartLabels: Array<string> = ref([]);
 let chartValuesWeight: Array<number> = ref([]);
 let chartValuesBurned: Array<number> = ref([]);
 
-const onMountedComputeChartData = onMounted(() => {
-  console.log('onMountedComputeChartData');
-  computeChartData();
-  return true;
+let lastWeight: number | null = ref(null);
+let weightStillToLoose: number | null = ref(null);
+let originalWeightToLoose: number | null = ref(null);
+let originalCaloriesToBurn: number | null = ref(null);
+
+let caloriesStillToBurn = computed(() => {
+  const lastTs = Math.max(...Object.keys(props.profile.weightList));
+  lastWeight.value = props.profile.weightList[lastTs];
+  //console.log('lastWeight', lastWeight.value);
+  weightStillToLoose.value = lastWeight.value - props.profile.targetWeight;
+  // console.log('weightStillToLoose', weightStillToLoose.value);
+
+  originalWeightToLoose.value =
+    props.profile.startWeight - props.profile.targetWeight;
+  originalCaloriesToBurn.value = originalWeightToLoose.value * 9000;
+
+  const caloriesStillToBurn = weightStillToLoose.value * 9000;
+  // console.log('caloriesStillToBurn', caloriesStillToBurn);
+  return caloriesStillToBurn;
 });
 
-const computeChartData = () => {
-  console.log(`computeChartData`);
-  console.log(
-    `Profile.vue computeChartData props.profile.name: ${props.profile.name}`
-  );
-  console.log(
-    `Profile.vue computeChartData props.profile: ${props.profile.toString()}`
-  );
-  let weightTsAr = Object.keys(props.profile.weightList).map((i) =>
-    parseInt(i)
-  );
-  let burnedTsAr = Object.keys(props.profile.burnedList).map((i) =>
-    parseInt(i)
-  );
-  console.log('weightTsAr', weightTsAr, 'burnedTsAr', burnedTsAr);
-  if (!(weightTsAr.length > 0 && burnedTsAr.length)) {
-    console.log('data not found');
-    return new Date();
-  }
-  let weightTsArReadable = Object.keys(props.profile.weightList).map(
-    (i) => new Date(parseInt(i) * 1000).toISOString().split('T')[0]
-  );
-  let burnedTsArReadable = Object.keys(props.profile.burnedList).map(
-    (i) => new Date(parseInt(i) * 1000).toISOString().split('T')[0]
-  );
-  let tsArray = weightTsAr.concat(burnedTsAr);
-  console.log('tsArray', tsArray);
-
-  // const reducer = (accumulator, currentValue) => (currentValue > accumulator) ? currentValue : accumulator;
-  // const max = tsArray.reduce(reducer, 0);
-  let max = Math.max(...tsArray);
-  let min = Math.min(...tsArray);
-  console.log(
-    'min:',
-    min,
-    new Date(min * 1000).toISOString().split('T')[0],
-    'max:',
-    max,
-    new Date(max * 1000).toISOString().split('T')[0]
-  );
-
-  let secondsInDay = 24 * 60 * 60;
-  let chartLabelsReadable = [];
-  let chartWeightAr = [];
-  let chartBurnedAr = [];
-  for (let i = min; i <= max; i += secondsInDay) {
-    let readableDate = new Date(i * 1000).toISOString().split('T')[0];
-    console.log(i, readableDate);
-    chartLabelsReadable.push(readableDate);
-    chartWeightAr.push(
-      i in props.profile.weightList ? props.profile.weightList[i] : null
-    );
-    chartBurnedAr.push(
-      i in props.profile.burnedList ? props.profile.burnedList[i] : null
-    );
-  }
-  console.log('chartLabels', chartLabels);
-  console.log('chartWeightAr', chartWeightAr);
-  console.log('chartBurnedAr', chartBurnedAr);
-  console.log(
-    'weightTsArReadable',
-    weightTsArReadable,
-    'burnedTsArReadable',
-    burnedTsArReadable
-  );
-  chartLabels.value = chartLabelsReadable;
-  chartValuesWeight.value = chartWeightAr;
-  chartValuesBurned.value = chartBurnedAr;
-
-  return new Date();
-};
+const onMountedComputeChartData = onMounted(() => {
+  console.log('onMountedComputeChartData');
+  let res = computeChartData(props.profile);
+  chartLabels.value = res.chartLabels;
+  chartValuesWeight.value = res.chartValuesWeight;
+  chartValuesBurned.value = res.chartValuesBurned;
+  return true;
+});
 
 const editDatumClick = (e) => {
   const ts = parseInt(e.currentTarget.getAttribute('data-ts'));
@@ -237,13 +190,14 @@ const switchLegend = () => {
     <!-- CHART -->
     <v-row>
       <v-col cols="12" class="">
-        Starting Weight {{ profile.startWeight }}kg -
-        {{ profile.startWeight - profile.targetWeight }}kg =
-        {{ profile.targettWeight }}kg<br />
+        Last weight: {{ lastWeight }}kg | Target weight:
+        {{ profile.targetWeight }}kg
         <br />
-        Total calories to burn:
-        {{ (profile.startWeight - profile.targetWeight) * 9000 }} Calories<br />
+        Weight to loose: {{ weightStillToLoose }} /
+        {{ originalWeightToLoose }} kg
         <br />
+        Calories to burn: {{ caloriesStillToBurn }} /
+        {{ originalCaloriesToBurn }} calories
       </v-col>
     </v-row>
     <v-row>
@@ -275,8 +229,10 @@ const switchLegend = () => {
                   :data-ts="key"
                   data-type="burned"
                   :data-value="value"
-                  fax
                   @click="removeDatumClick"
+                  fab
+                  dark
+                  x-small
                 >
                   <i-mdi:delete />
                 </v-btn>
@@ -309,8 +265,10 @@ const switchLegend = () => {
                   :data-ts="key"
                   data-type="weight"
                   :data-value="value"
-                  fax
                   @click="removeDatumClick"
+                  fab
+                  dark
+                  x-small
                 >
                   <i-mdi:delete />
                 </v-btn>

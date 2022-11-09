@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IconAccount from '~icons/mdi/account';
 import IconWeightKilogram from '~icons/mdi/weight-kilogram';
-import { Profile } from '../classes/profile';
+import { Profile } from '../modules/profile';
 // unplugin-auto-import will declare it on src/auto-imports.d.ts
 
 // https://vuejs.org/api/sfc-script-setup.html#typescript-only-features

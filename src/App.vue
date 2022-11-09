@@ -9,7 +9,7 @@ TODO:
 */
 // unplugin-auto-import will declare it on src/auto-imports.d.ts
 
-import { Profile, ProfileListManagerLocalStorage } from './classes/profile';
+import { Profile, ProfileListManagerLocalStorage } from './modules/profile';
 
 const profilesMngr = new ProfileListManagerLocalStorage();
 let profiles = reactive(new Map());

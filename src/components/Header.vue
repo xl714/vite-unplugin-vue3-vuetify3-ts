@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // https://vuejs.org/api/sfc-script-setup.html#typescript-only-features
-import { Profile } from '../classes/profile';
+import { Profile } from '../modules/profile';
 export interface Props {
   profile?: Profile | null;
 }
