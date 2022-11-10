@@ -162,6 +162,11 @@ const options = computed<ChartOptions<'line'>>(() => ({
     },
   },
   spanGaps: true,
+  scales: {
+    y: {
+      beginAtZero: true,
+    },
+  },
 }));
 
 const { lineChartProps } = useLineChart({
