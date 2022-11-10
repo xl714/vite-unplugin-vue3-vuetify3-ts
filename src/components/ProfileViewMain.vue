@@ -27,7 +27,10 @@ let originalWeightToLoose: number | null = ref(null);
 let originalCaloriesToBurn: number | null = ref(null);
 
 let caloriesStillToBurn = computed(() => {
-  const lastTs = Math.max(...Object.keys(props.profile.weightList));
+  let weightTsAr = Object.keys(props.profile.weightList).map((i) =>
+    parseInt(i)
+  );
+  const lastTs = Math.max(...weightTsAr);
   lastWeight.value = props.profile.weightList[lastTs];
   //console.log('lastWeight', lastWeight.value);
   weightStillToLoose.value = lastWeight.value - props.profile.targetWeight;
