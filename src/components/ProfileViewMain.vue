@@ -193,6 +193,11 @@ const options = computed<ChartOptions<'line'>>(() => ({
     },
     y: {
       display: true,
+      position: 'left',
+      // https://www.chartjs.org/docs/latest/samples/other-charts/scatter-multi-axis.html
+      ticks: {
+        color: Utils.CHART_COLORS.red,
+      },
       // https://www.chartjs.org/docs/latest/samples/scales/log.html
       // type: 'logarithmic',
       // beginAtZero: true,
@@ -202,6 +207,9 @@ const options = computed<ChartOptions<'line'>>(() => ({
       type: 'linear',
       display: true,
       position: 'right',
+      ticks: {
+        color: Utils.CHART_COLORS.blue,
+      },
       // grid line settings
       grid: {
         drawOnChartArea: false, // only want the grid lines for one axis to show up
