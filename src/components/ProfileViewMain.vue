@@ -164,7 +164,7 @@ const getData = computed<ChartData<'line'>>(() => ({
     },
     {
       type: 'bar',
-      label: 'Dataset 2',
+      label: 'Burned calories',
       backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
       borderColor: Utils.CHART_COLORS.blue,
       data: chartValuesBurned.value,
@@ -193,7 +193,12 @@ const options = computed<ChartOptions<'line'>>(() => ({
   },
   spanGaps: true,
   scales: {
+    x: {
+      display: true,
+    },
     y: {
+      display: true,
+      type: 'logarithmic',
       // beginAtZero: true,
     },
   },
