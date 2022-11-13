@@ -7,7 +7,10 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@kurkle/color": "^0.2.1",
     "chart.js": "^3.9.1",
+    "chartjs-adapter-luxon": "^1.2.0",
+    "luxon": "^3.1.0",
     "vue": "^3.2.26",
     "vue-chart-3": "^3.1.8",
     "vue-router": "^4.1.6",

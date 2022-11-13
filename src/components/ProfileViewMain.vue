@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Profile } from '../modules/profile';
 import { computeChartData } from '../modules/computeChartData';
+import * as Utils from '../modules/chartJSUtils';
 import IconWeightKilogram from '~icons/mdi/weight-kilogram';
 import IconFire from '~icons/mdi/fire';
 // import Datepicker from 'vue3-datepicker';
@@ -161,6 +162,20 @@ const getData = computed<ChartData<'line'>>(() => ({
       fill: false,
       borderColor: '#FFD700',
     },
+    {
+      type: 'bar',
+      label: 'Dataset 2',
+      backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
+      borderColor: Utils.CHART_COLORS.blue,
+      data: Utils.numbers({ count: 7, min: 0, max: 100 }),
+    },
+
+    // {
+    //   type: 'bar',
+    //   label: 'Dataset 2',
+    //   borderColor: '#FFD700',
+    //   data: [28, 48, 40, 19, 86, 27, 90],
+    // },
     // {
     //   label: 'Burned calories',
     //   data: chartValuesBurned.value,
