@@ -161,6 +161,7 @@ const getData = computed<ChartData<'line'>>(() => ({
       data: chartValuesTargetWeight.value,
       fill: false,
       borderColor: '#FFD700',
+      yAxisID: 'y',
     },
     {
       type: 'bar',
@@ -168,19 +169,13 @@ const getData = computed<ChartData<'line'>>(() => ({
       backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
       borderColor: Utils.CHART_COLORS.blue,
       data: chartValuesBurned.value,
+      yAxisID: 'y1',
     },
-
     // {
     //   type: 'bar',
     //   label: 'Dataset 2',
     //   borderColor: '#FFD700',
     //   data: [28, 48, 40, 19, 86, 27, 90],
-    // },
-    // {
-    //   label: 'Burned calories',
-    //   data: chartValuesBurned.value,
-    //   fill: false,
-    //   borderColor: '#4bc0c0',
     // },
   ],
 }));
@@ -198,8 +193,19 @@ const options = computed<ChartOptions<'line'>>(() => ({
     },
     y: {
       display: true,
-      type: 'logarithmic',
+      // https://www.chartjs.org/docs/latest/samples/scales/log.html
+      // type: 'logarithmic',
       // beginAtZero: true,
+    },
+    // https://www.chartjs.org/docs/latest/samples/line/multi-axis.html
+    y1: {
+      type: 'linear',
+      display: true,
+      position: 'right',
+      // grid line settings
+      grid: {
+        drawOnChartArea: false, // only want the grid lines for one axis to show up
+      },
     },
   },
 }));
