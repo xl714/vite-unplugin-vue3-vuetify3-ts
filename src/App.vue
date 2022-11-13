@@ -150,7 +150,7 @@ const openEditFormProfile = (id: number) => {
 <template>
   <v-app id="inspire">
     <Header :profile="selectedProfile" @onEmitOpenProfiles="openProfiles" />
-    <v-main>
+    <v-main class="mb-10">
       <ProfileViewMain
         v-if="showProfileViewMain"
         :profile="selectedProfile"

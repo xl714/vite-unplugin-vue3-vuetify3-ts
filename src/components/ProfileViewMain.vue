@@ -214,10 +214,10 @@ const switchLegend = () => {
     </header>
     <!-- CHART -->
 
-    <h3 class="text-center ma-5 text-center">
+    <div class="text-center ma-6 text-h5">
       Calories still to burn: {{ caloriesStillToBurn }} /
-      {{ originalCaloriesToBurn }} calories
-    </h3>
+      {{ originalCaloriesToBurn }}
+    </div>
 
     <v-row>
       <v-col cols="12" class="data-summary">
@@ -253,7 +253,7 @@ const switchLegend = () => {
     <v-row>
       <v-col cols="6" class="text-center">
         <h3 class="text-center">Calories burned</h3>
-        <table class="v-simple-table dense">
+        <table class="v-simple-table dense burned">
           <!-- <template v-slot:default> -->
           <thead>
             <tr>
@@ -289,7 +289,7 @@ const switchLegend = () => {
       <!-- TABLE WEIGHTS -->
       <v-col cols="6" class="text-center">
         <h3 class="text-center">Weights</h3>
-        <table class="v-simple-table dense">
+        <table class="v-simple-table dense weights">
           <!-- <template v-slot:default> -->
           <thead>
             <tr>
@@ -397,5 +397,26 @@ table tbody tr td {
 .input-weight,
 .input-calories {
   margin-left: 3px;
+}
+.v-simple-table.burned,
+.v-simple-table.weights {
+  font-size: 1em;
+}
+@media only screen and (max-width: 700px) {
+  .v-simple-table.burned,
+  .v-simple-table.weights {
+    font-size: 0.6em;
+  }
+  #inspire main table tbody td button.v-btn.x-small {
+    font-size: 0.6em !important;
+    padding: 0 !important;
+    height: 25px !important;
+    width: 25px !important;
+    font-size: 0.6em !important;
+  }
+  button.v-btn.x-small svg {
+    font-size: 0.6em;
+    padding: 0;
+  }
 }
 </style>

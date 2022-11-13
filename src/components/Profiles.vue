@@ -54,7 +54,7 @@ const emitSelectProfile = (e) => {
       </v-row>
     </header>
     <v-row>
-      <v-col v-for="[id, item] in props.profiles.value" :key="id" cols="3">
+      <v-col v-for="[id, item] in props.profiles.value" :key="id" cols="6">
         <v-card
           :class="props.selectedProfileId == item.id ? `selected` : ``"
           :outlined="props.selectedProfileId == item.id ? `outlined` : ``"
