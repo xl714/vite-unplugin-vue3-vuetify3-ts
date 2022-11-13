@@ -18,12 +18,14 @@ let datePicked: Date = ref(new Date());
 let weight: number | null = ref(null);
 let calories: number | null = ref(null);
 let chartLabels: Array<string> = ref([]);
-let chartValuesWeight: Array<number> = ref([]);
 let chartValuesBurned: Array<number> = ref([]);
+let chartValuesWeight: Array<number> = ref([]);
+let chartValuesTargetWeight: Array<number> = ref([]);
 
 let lastWeight: number | null = ref(null);
 let weightStillToLoose: number | null = ref(null);
 let originalWeightToLoose: number | null = ref(null);
+let weightLost: number | null = ref(null);
 let originalCaloriesToBurn: number | null = ref(null);
 
 let caloriesStillToBurn = computed(() => {
@@ -34,13 +36,19 @@ let caloriesStillToBurn = computed(() => {
   lastWeight.value = props.profile.weightList[lastTs];
   //console.log('lastWeight', lastWeight.value);
   weightStillToLoose.value = lastWeight.value - props.profile.targetWeight;
+  weightStillToLoose.value = Math.round(weightStillToLoose.value * 100) / 100;
   // console.log('weightStillToLoose', weightStillToLoose.value);
 
   originalWeightToLoose.value =
     props.profile.startWeight - props.profile.targetWeight;
+
+  weightLost.value = props.profile.startWeight - lastWeight.value;
+  weightLost.value = Math.round(weightLost.value * 100) / 100;
+
   originalCaloriesToBurn.value = originalWeightToLoose.value * 9000;
 
-  const caloriesStillToBurn = weightStillToLoose.value * 9000;
+  const caloriesStillToBurn =
+    Math.round(weightStillToLoose.value * 9000 * 100) / 100;
   // console.log('caloriesStillToBurn', caloriesStillToBurn);
   return caloriesStillToBurn;
 });
@@ -49,8 +57,9 @@ const onMountedComputeChartData = onMounted(() => {
   console.log('onMountedComputeChartData');
   let res = computeChartData(props.profile);
   chartLabels.value = res.chartLabels;
-  chartValuesWeight.value = res.chartValuesWeight;
   chartValuesBurned.value = res.chartValuesBurned;
+  chartValuesWeight.value = res.chartValuesWeight;
+  chartValuesTargetWeight.value = res.chartTargetWeightAr;
   return true;
 });
 
@@ -143,15 +152,21 @@ const getData = computed<ChartData<'line'>>(() => ({
       //data: [65, 59, 80, 81, 56, 55, 40],
       data: chartValuesWeight.value,
       fill: false,
-      borderColor: '#4bc0c0',
-    },
-    {
-      label: 'Burned calories',
-      // data: [28, 48, 40, 19, 86, 27, 90],
-      data: chartValuesBurned.value,
-      fill: true,
       borderColor: '#eb4034',
     },
+    {
+      label: 'Target Weight',
+      // data: [28, 48, 40, 19, 86, 27, 90],
+      data: chartValuesTargetWeight.value,
+      fill: false,
+      borderColor: '#FFD700',
+    },
+    // {
+    //   label: 'Burned calories',
+    //   data: chartValuesBurned.value,
+    //   fill: false,
+    //   borderColor: '#4bc0c0',
+    // },
   ],
 }));
 
@@ -164,7 +179,7 @@ const options = computed<ChartOptions<'line'>>(() => ({
   spanGaps: true,
   scales: {
     y: {
-      beginAtZero: true,
+      // beginAtZero: true,
     },
   },
 }));
@@ -198,16 +213,35 @@ const switchLegend = () => {
       </v-row>
     </header>
     <!-- CHART -->
+
+    <h3 class="text-center ma-5 text-center">
+      Calories still to burn: {{ caloriesStillToBurn }} /
+      {{ originalCaloriesToBurn }} calories
+    </h3>
+
     <v-row>
-      <v-col cols="12" class="">
-        Last weight: {{ lastWeight }}kg | Target weight:
-        {{ profile.targetWeight }}kg
-        <br />
-        Weight to loose: {{ weightStillToLoose }} /
-        {{ originalWeightToLoose }} kg
-        <br />
-        Calories to burn: {{ caloriesStillToBurn }} /
-        {{ originalCaloriesToBurn }} calories
+      <v-col cols="12" class="data-summary">
+        <table class="v-simple-table dense">
+          <!-- <template v-slot:default> -->
+          <thead>
+            <tr>
+              <th class="text-center">Weight started at</th>
+              <th class="text-center">Current</th>
+              <th class="text-center">Target</th>
+              <th class="text-center">Lost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center">{{ profile.startWeight }}kg</td>
+              <td class="text-center">{{ lastWeight }}kg</td>
+              <td class="text-center">{{ profile.targetWeight }}kg</td>
+              <td class="text-center">
+                {{ weightLost }} / {{ originalWeightToLoose }} kg
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </v-col>
     </v-row>
     <v-row>
@@ -347,8 +381,8 @@ const switchLegend = () => {
   </v-container>
 </template>
 <style scoped>
-.text-center {
-  text-align: center;
+.data-summary {
+  text-align: left;
 }
 table {
   width: 100%;
