@@ -248,16 +248,17 @@ const switchLegend = () => {
     </header>
     <!-- CHART -->
 
-    <div class="text-center ma-6 text-h5">
-      Still to burn: {{ caloriesStillToBurn }} /
-      {{ originalCaloriesToBurn }} Calories
-    </div>
-
     <v-row>
       <v-col cols="12" class="data-summary">
         <table class="v-simple-table dense summary">
           <!-- <template v-slot:default> -->
           <thead>
+            <tr>
+              <th class="summary-title text-center py-1" colspan="4">
+                Still to burn: {{ caloriesStillToBurn }} /
+                {{ originalCaloriesToBurn }} Calories
+              </th>
+            </tr>
             <tr>
               <th class="text-center">Weight started at</th>
               <th class="text-center">Current</th>
@@ -432,6 +433,11 @@ table tbody tr td {
 .input-calories {
   margin-left: 3px;
 }
+.summary-title {
+  font-size: 1.5em;
+  background-color: gold;
+  font-weight: bold;
+}
 
 .v-simple-table.summary,
 .v-simple-table.burned,
@@ -439,6 +445,9 @@ table tbody tr td {
   font-size: 1em;
 }
 @media only screen and (max-width: 700px) {
+  .summary-title {
+    font-size: 1.5em;
+  }
   .v-simple-table.summary,
   .v-simple-table.burned,
   .v-simple-table.weights {
