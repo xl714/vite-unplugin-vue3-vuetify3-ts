@@ -215,13 +215,13 @@ const switchLegend = () => {
     <!-- CHART -->
 
     <div class="text-center ma-6 text-h5">
-      Calories still to burn: {{ caloriesStillToBurn }} /
-      {{ originalCaloriesToBurn }}
+      Still to burn: {{ caloriesStillToBurn }} /
+      {{ originalCaloriesToBurn }} Calories
     </div>
 
     <v-row>
       <v-col cols="12" class="data-summary">
-        <table class="v-simple-table dense">
+        <table class="v-simple-table dense summary">
           <!-- <template v-slot:default> -->
           <thead>
             <tr>
@@ -398,11 +398,14 @@ table tbody tr td {
 .input-calories {
   margin-left: 3px;
 }
+
+.v-simple-table.summary,
 .v-simple-table.burned,
 .v-simple-table.weights {
   font-size: 1em;
 }
 @media only screen and (max-width: 700px) {
+  .v-simple-table.summary,
   .v-simple-table.burned,
   .v-simple-table.weights {
     font-size: 0.6em;
