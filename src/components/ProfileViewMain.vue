@@ -167,7 +167,7 @@ const getData = computed<ChartData<'line'>>(() => ({
       label: 'Dataset 2',
       backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
       borderColor: Utils.CHART_COLORS.blue,
-      data: Utils.numbers({ count: 7, min: 0, max: 100 }),
+      data: chartValuesBurned.value,
     },
 
     // {
